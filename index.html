@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pl"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101512"><title>Kraken Squash LiveScore V3</title>
+<meta name="theme-color" content="#101512"><title>Kraken Squash LiveScore V6</title>
 <style>
 :root{--bg:#0b100d;--panel:#171f19;--panel2:#222d25;--line:#39483d;--lime:#c8ff50;--text:#f2f6ef;--muted:#aab6aa;--red:#ff7777;--gold:#ffd36a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}header{max-width:1100px;margin:auto;padding:17px 15px 9px;display:flex;align-items:center;justify-content:space-between;gap:8px}h1{font-size:19px;margin:0}h1 span{color:var(--lime)}.tag,.badge{font-size:10px;border:1px solid #627b39;color:var(--lime);padding:5px 9px;border-radius:20px;white-space:nowrap}
@@ -9,7 +9,7 @@ nav{max-width:1100px;margin:8px auto 16px;padding:0 12px;display:flex;gap:6px;ov
 main{max-width:1100px;margin:auto;padding:0 14px 45px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:125px}label{display:block;color:var(--muted);font-size:12px;margin:11px 0 5px}input,select{width:100%;background:#0e1510;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}button{font:inherit;cursor:pointer}.btn{background:var(--lime);color:#11170d;border:0;border-radius:10px;padding:11px 14px;font-weight:850}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn.danger{background:#482626;color:#ffe1e1}.btn.gold{background:#5a4722;color:#ffe6aa}.small{font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.hidden{display:none!important}.section-title{font-size:18px;margin:0 0 11px}.toast{color:var(--lime);font-size:12px;margin-top:8px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.stat{background:var(--panel2);padding:13px;border-radius:11px}.stat strong{font-size:25px;color:var(--lime);display:block}.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:9px}.side{min-height:245px;border:1px solid var(--line);border-radius:16px;background:var(--panel2);color:var(--text);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px;touch-action:manipulation}.side:active{filter:brightness(1.18)}.side.blue{border:3px solid #319cff;background:linear-gradient(145deg,#102b43,#1b2734)}.side.red{border:3px solid #ff525e;background:linear-gradient(145deg,#431b25,#302027)}.side .teamtag{font-size:11px;letter-spacing:1px;font-weight:900;margin-bottom:7px}.side.blue .teamtag{color:#62baff}.side.red .teamtag{color:#ff858b}.bracket-round{display:inline-block;vertical-align:top;min-width:180px;margin:5px;padding:9px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.bracket-match{padding:8px;margin:6px 0;background:#111812;border-radius:8px;font-size:12px}.bracket-match.won{border-left:3px solid var(--lime)}.side .name{font-size:clamp(17px,4vw,25px);font-weight:850;text-align:center}.points{font-size:clamp(68px,17vw,112px);font-weight:950;line-height:1.1;color:var(--lime)}.hint{text-align:center;color:var(--muted);font-size:12px;margin:9px}.nextbox{background:#202d1e;border:1px solid #617c37;border-radius:13px;padding:13px;margin:10px 0}.nextbox strong{font-size:20px;color:var(--lime)}.schedule{display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.schedule.current{color:var(--lime)}.schedule.done{opacity:.55}.pill{font-size:10px;background:#2d3b2c;color:var(--lime);padding:4px 7px;border-radius:15px}.playerchip{display:inline-flex;gap:6px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:6px 10px;margin:3px}.playerchip button{background:none;border:0;color:var(--red);font-weight:bold}.callout{background:#20271f;border-left:3px solid var(--lime);padding:10px 12px;border-radius:7px;margin:9px 0}.warning{color:var(--gold)}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{padding:15px;border:2px solid var(--line);border-radius:13px;background:var(--panel2);text-align:left;color:var(--text);min-height:85px}.choice.selected{border-color:var(--lime);background:#26351f}.choice b{display:block;font-size:17px;margin-bottom:4px}.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.podium div{background:var(--panel2);border-radius:12px;padding:12px 5px}.podium strong{display:block;font-size:24px}.hardcore-current{border:2px solid var(--gold);background:#342b17;border-radius:12px;padding:12px;margin:10px 0}.tvMode header,.tvMode nav,.tvMode .no-tv{display:none!important}.tvMode main{max-width:1500px}.tvMode .side{min-height:55vh}.tvMode .points{font-size:clamp(100px,22vw,240px)}.tvMode .side .name{font-size:clamp(28px,5vw,60px)}.tvMode #tvExit{display:block!important}.tvMode #live{padding-top:12px}.footer{text-align:center;color:#718071;font-size:11px;padding:14px}
 @media(min-width:700px){.statgrid{grid-template-columns:repeat(4,1fr)}.side{min-height:310px}}
 </style></head><body>
-<header><h1>🦑 KRAKEN <span>Squash LiveScore</span></h1><span class="tag">V3 · PROTOTYP</span></header>
+<header><h1>🦑 KRAKEN <span>Squash LiveScore</span></h1><span id="cloudStatus" class="tag">Łączenie z Firebase…</span></header>
 <nav class="no-tv"><button class="active" data-tab="game">Gra</button><button data-tab="schedule">Harmonogram</button><button data-tab="matches">Mecze</button><button data-tab="stats">Ranking</button><button data-tab="admin">Panel admina</button></nav>
 <main>
 <section id="game">
@@ -48,6 +48,14 @@ main{max-width:1100px;margin:auto;padding:0 14px 45px}.card{background:var(--pan
 <section id="matches" class="hidden"><div class="card"><h2 class="section-title">Historia spotkań</h2><div id="matchList" class="muted">Brak meczów.</div></div></section>
 <section id="stats" class="hidden"><div class="card"><h2 class="section-title">Statystyki i ranking</h2><div id="statsGrid" class="statgrid"></div></div><div class="card"><h3 class="section-title">Ranking zawodników</h3><div id="ranking"></div></div></section>
 <section id="admin" class="hidden">
+<div class="card">
+<h2 class="section-title">Logowanie administratora</h2>
+<p class="small">Zaloguj się kontem utworzonym w Firebase Authentication. Tylko wskazane konto administratora może zapisywać zmiany w rozgrywkach.</p>
+<div class="row"><div><label>E-mail administratora</label><input id="adminEmail" type="email" autocomplete="username" placeholder="adres e-mail"></div><div><label>Hasło</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Hasło"></div></div>
+<div class="row"><button class="btn" id="loginBtn">ZALOGUJ</button><button class="btn secondary" id="logoutBtn">WYLOGUJ</button></div>
+<div id="authMsg" class="toast">Nie zalogowano.</div>
+</div>
+<div id="adminControls" class="hidden">
 <div class="card"><h2 class="section-title">Panel administratora</h2><div class="row"><div><label>Nazwa wydarzenia</label><input id="eventName" value="Kraken Squash Night"></div><div><label>Kod rozgrywek</label><input id="eventCode" readonly value="KRAKEN-DEMO"></div></div>
 <h3 class="section-title" style="margin-top:18px">Zawodnicy</h3><div id="adminPlayers"></div><div class="row"><input id="addPlayerName" placeholder="Imię nowego gracza"><button class="btn secondary" id="addPlayer">+ Dodaj zawodnika</button></div>
 <div class="callout small">W wersji online dodawanie, pauzowanie i zmiany kolejki będą dostępne wyłącznie dla administratora po zalogowaniu.</div>
@@ -55,13 +63,27 @@ main{max-width:1100px;margin:auto;padding:0 14px 45px}.card{background:var(--pan
 <h3 class="section-title" style="margin-top:18px">Dołączanie do rozgrywek</h3><div class="row"><div><label>Link do podglądu (demo)</label><input id="shareLink" readonly></div><button class="btn secondary" id="copyLink">Kopiuj link</button></div><div id="qrArea" class="small">Kod QR i publiczny link będą aktywne po opublikowaniu aplikacji online.</div>
 <div class="row" style="margin-top:15px"><button class="btn secondary" id="export">Eksportuj wyniki CSV</button><button class="btn danger" id="clear">Usuń lokalne dane demo</button></div><div id="adminMsg" class="toast"></div>
 </div>
+</div>
 </section>
-<div class="footer">Kraken Squash LiveScore · V3 · prototyp lokalny</div>
+<div class="footer">Kraken Squash LiveScore · V6 · Firebase</div>
 </main>
 <script>
 const $=id=>document.getElementById(id);
 let players=[],schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=JSON.parse(localStorage.getItem('krakenV5Results')||'[]'),paused=new Set(),settings={},isPaused=false;
 const uid=()=>Math.random().toString(36).slice(2,9);
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyB58i-ekgxAF5fV5wlAHaPc0Ky_9u2MZco",
+  authDomain: "kraken-squash.firebaseapp.com",
+  databaseURL: "https://kraken-squash-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "kraken-squash",
+  storageBucket: "kraken-squash.firebasestorage.app",
+  messagingSenderId: "930139199042",
+  appId: "1:930139199042:web:8cc5e75916df14ef45ffdb",
+  measurementId: "G-GE8KKYK5K3"
+};
+const ADMIN_UID = "SpCWYEhbNPNUOdMKxGq8absOm8g1";
+let fbApp=null, fbAuth=null, fbDb=null, fbFns=null, authUser=null, isAdmin=false;
+let eventId=null, cloudReady=false, cloudSaveTimer=null, applyingCloudState=false, viewerMode=false;
 function tab(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='schedule')renderSchedule();if(id==='matches')renderMatches();if(id==='stats')renderStats();if(id==='admin')renderAdmin()}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 $('rounds').onchange=()=> $('customWrap').classList.toggle('hidden',$('rounds').value!=='custom');
@@ -182,6 +204,7 @@ $('teamChoice').onclick=()=>setCompetitionType('team');
 $('mode').onchange=updateModeDescription;
 
 function create(){
+ if(!isAdmin){$('setupMsg').textContent='Tylko zalogowany administrator może tworzyć rozgrywki.';return;}
  players=namesFromInputs();let kind=$('competitionType').value==='team'?'team':$('kind').value;
  if(players.length<2||players.length>4){$('setupMsg').textContent='Podaj od 2 do 4 zawodników.';return}
  if(kind==='doubles'&&players.length!==4){$('setupMsg').textContent='Debel wymaga dokładnie 4 zawodników.';return}
@@ -206,8 +229,11 @@ function create(){
    // Drużynowy Champion: dwa zespoły, pojedynki 1v1, każdy zawodnik gra z rywalem z drugiej drużyny.
    schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
  }
- current=null;if(settings.mode==='hardcore')launchHardcoreMatch();else startNext();$('setup').classList.add('hidden');$('live').classList.remove('hidden');$('eventTitle').textContent=settings.eventName;
- $('shareLink').value=location.href.split('#')[0]+'#event='+($('eventCode').value||'KRAKEN-DEMO');
+ current=null;if(settings.mode==='hardcore')launchHardcoreMatch();else startNext();$('setup').classList.add('hidden');$('live').classList.remove('hidden');$('eventTitle').textContent=settings.eventName;queueCloudSave();
+ if(!eventId)eventId=makeEventCode();
+ $('eventCode').value=eventId;
+ $('shareLink').value=location.href.split('#')[0]+'#event='+eventId;
+ queueCloudSave();
  renderAdmin();renderSchedule();
 }
 
@@ -241,13 +267,17 @@ function matchLabel(m){return m.teams.map(t=>t.join(' + ')).join(' vs ')}
 function upcoming(){return schedule.filter(m=>m.status==='pending'&&!m.teams.flat().some(n=>paused.has(n))).slice(0,3)}
 function renderLive(){
  if(!current)return;
+ queueCloudSave();
  $('matchMeta').textContent=settings.mode==='hardcore'?`HARDCORE · Zwycięzca zostaje · seria: ${hardcore.streak} · punkty do tej pory: ${hardcore.points[hardcore.king]}`:`Runda ${current.round} · Slot ${current.slot} · Kort ${current.court} · ${settings.kind==='doubles'?'Debel':settings.kind==='team'?'Drużyny · Niebiescy vs Czerwoni':'Single'}`;
  $('setLabel').textContent=`SET ${current.setNo} · SETY ${current.sets.join(' : ')}`;
- $('scoreboard').innerHTML=current.teams.map((team,i)=>`<button class="side ${i===0?'blue':'red'}" onclick="addPoint(${i})"><div class="teamtag">${i===0?'🔵 NIEBIESCY':'🔴 CZERWONI'}</div><div class="name">${team.join(' + ')}</div><div class="points">${current.points[i]}</div><div class="small">sety: ${current.sets[i]}</div><div class="small">DODAJ PUNKT ＋</div></button>`).join('');
+ $('scoreboard').innerHTML=current.teams.map((team,i)=>`<${isAdmin?'button':'div'} class="side ${i===0?'blue':'red'}" ${isAdmin?`onclick="addPoint(${i})"`:''}><div class="teamtag">${i===0?'🔵 NIEBIESCY':'🔴 CZERWONI'}</div><div class="name">${team.join(' + ')}</div><div class="points">${current.points[i]}</div><div class="small">sety: ${current.sets[i]}</div><div class="small">${isAdmin?'DODAJ PUNKT ＋':'PODGLĄD NA ŻYWO'}</div></${isAdmin?'button':'div'}>`).join('');
+ $('undo').disabled=!isAdmin;$('finish').disabled=!isAdmin;$('pause').disabled=!isAdmin;$('endSession').disabled=!isAdmin;$('nextBtn').disabled=!isAdmin;
+ if(viewerMode){$('setup').classList.add('hidden');$('live').classList.remove('hidden');}
  let next=upcoming()[0];if(settings.mode==='hardcore'){$('nextBox').innerHTML=`<div class="hardcore-current"><div class="small">🔥 HARDCORE — ZWYCIĘZCA ZOSTAJE NA KORCIE</div><b>${hardcore.king}</b> broni kortu · <b>${hardcore.challenger}</b> rzuca wyzwanie.<div class="small">Następny w kolejce: ${hardcore.queue[0]||'kolejka zostanie uzupełniona'}</div></div>`;return}$('nextBox').innerHTML=next?`<div class="small">NASTĘPNY MECZ · RUNDA ${next.round} · KORT ${next.court}</div><strong>${matchLabel(next)}</strong><div class="small">Mecz ${schedule.indexOf(next)+1} z ${schedule.length}${Number.isFinite(+schedule.length)?'':''}</div>`:'<div class="small">Brak dostępnych następnych spotkań. Sprawdź pauzujących zawodników lub zakończ rundy.</div>';
  $('liveMsg').textContent=isPaused?'Mecz wstrzymany.': '';
 }
 function addPoint(i){
+ if(!isAdmin)return;
  if(!current||current.done||isPaused)return;history.push(JSON.stringify(current));current.points[i]++;
  let [a,b]=current.points,w=-1,t=settings.target;
  if(settings.deuce==='sudden'&&a>=t-1&&b>=t-1){if(a!==b)w=a>b?0:1}
@@ -279,6 +309,7 @@ function complete(w){
 }
 
 function continueHardcore(){
+ if(!isAdmin)return;
  if(!hardcore)return;
  let previousKing=hardcore.king;
  if(hardcore.queue.length===0)hardcore.queue=players.filter(n=>n!==hardcore.king);
@@ -291,18 +322,19 @@ function renderHardcoreClassification(){
  `<div class="small"><b>Klasyfikacja punktowa</b></div>`+rows.map((x,i)=>`<div class="item"><b>${i===0?'🏆 ':''}${i+1}. ${x[0]}</b><span>${x[1]} pkt · ${hardcore.wins[x[0]]} wygranych</span></div>`).join('');
  $('modeSummary').innerHTML=rows.map((x,i)=>`<div class="item"><b>${i+1}. ${x[0]}</b><span>${x[1]} pkt</span></div>`).join('');
 }
-function continueAfterMatch(){if(settings.mode==='equal'&&schedule.some(m=>m.status==='pending')){startNext()}else if(settings.mode==='champion'&&schedule.some(m=>m.status==='pending')){startNext()}else{$('matchMeta').textContent='Wszystkie zaplanowane mecze zakończone.';$('scoreboard').innerHTML='<div class="card" style="grid-column:1/-1;text-align:center"><h2>Rozgrywki zakończone</h2><button class="btn" onclick="newEvent()">NOWE ROZGRYWKI</button></div>';$('nextBox').innerHTML='';current=null}renderSchedule()}
-function undo(){if(!history.length||!current)return;current=JSON.parse(history.pop());renderLive()}
-function finish(){if(!current||current.done)return;if(confirm('Zapisać mecz na podstawie aktualnego wyniku?')){let w=current.sets[0]===current.sets[1]?(current.points[0]>=current.points[1]?0:1):(current.sets[0]>current.sets[1]?0:1);complete(w)}}
-function togglePause(){isPaused=!isPaused;$('pause').textContent=isPaused?'Wznów mecz':'Pauza';renderLive()}
-function newEvent(){current=null;schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};$('live').classList.add('hidden');$('setup').classList.remove('hidden');}
+function continueAfterMatch(){if(!isAdmin)return;if(settings.mode==='equal'&&schedule.some(m=>m.status==='pending')){startNext()}else if(settings.mode==='champion'&&schedule.some(m=>m.status==='pending')){startNext()}else{$('matchMeta').textContent='Wszystkie zaplanowane mecze zakończone.';$('scoreboard').innerHTML='<div class="card" style="grid-column:1/-1;text-align:center"><h2>Rozgrywki zakończone</h2><button class="btn" onclick="newEvent()">NOWE ROZGRYWKI</button></div>';$('nextBox').innerHTML='';current=null}renderSchedule()}
+function undo(){if(!isAdmin)return;if(!history.length||!current)return;current=JSON.parse(history.pop());renderLive()}
+function finish(){if(!isAdmin)return;if(!current||current.done)return;if(confirm('Zapisać mecz na podstawie aktualnego wyniku?')){let w=current.sets[0]===current.sets[1]?(current.points[0]>=current.points[1]?0:1):(current.sets[0]>current.sets[1]?0:1);complete(w)}}
+function togglePause(){if(!isAdmin)return;isPaused=!isPaused;$('pause').textContent=isPaused?'Wznów mecz':'Pauza';renderLive()}
+function newEvent(){if(!isAdmin)return;current=null;schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};eventId=null;viewerMode=false;history=[];location.hash='';$('live').classList.add('hidden');$('setup').classList.remove('hidden');}
 function renderSchedule(){
+ queueCloudSave();
  renderBracket();if(settings&&settings.mode==='hardcore'){renderHardcoreClassification();$('scheduleSummary').textContent=`Hardcore · rozegrane mecze: ${hardcore?hardcore.played:0} · zwycięzca kortu: ${hardcore?hardcore.king:'—'}`;$('scheduleList').innerHTML='';return;}
  $('scheduleSummary').textContent=schedule.length?`Zaplanowano ${schedule.length} spotkań · rozegrane: ${schedule.filter(m=>m.status==='done').length} · oczekujące: ${schedule.filter(m=>m.status==='pending').length} · korty: ${settings.courts||1}`:'Nie utworzono jeszcze harmonogramu.';
  let next=upcoming()[0];$('upNext').classList.toggle('hidden',!next);$('upNext').innerHTML=next?`<div class="small">NAJBLIŻSZY MECZ</div><strong>${matchLabel(next)}</strong><div class="small">Runda ${next.round} · kort ${next.court}</div>`:'';
- $('scheduleList').innerHTML=schedule.map((m,i)=>`<div class="schedule ${m.status==='playing'?'current':''} ${m.status==='done'?'done':''}"><span>${i+1}.</span><span>R${m.round} · K${m.court}: ${matchLabel(m)}${m.teams.flat().some(n=>paused.has(n))?' <span class="warning">(pauza gracza)</span>':''}</span><span><span class="pill">${m.status==='done'?'ZAGRANY':m.status==='playing'?'TERAZ':'OCZEKUJE'}</span> ${m.status==='pending'?`<button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},-1)">↑</button><button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},1)">↓</button>`:''}</span></div>`).join('');
+ $('scheduleList').innerHTML=schedule.map((m,i)=>`<div class="schedule ${m.status==='playing'?'current':''} ${m.status==='done'?'done':''}"><span>${i+1}.</span><span>R${m.round} · K${m.court}: ${matchLabel(m)}${m.teams.flat().some(n=>paused.has(n))?' <span class="warning">(pauza gracza)</span>':''}</span><span><span class="pill">${m.status==='done'?'ZAGRANY':m.status==='playing'?'TERAZ':'OCZEKUJE'}</span> ${m.status==='pending'&&isAdmin?`<button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},-1)">↑</button><button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},1)">↓</button>`:''}</span></div>`).join('');
 }
-function moveMatch(i,d){let j=i+d;if(j<0||j>=schedule.length||schedule[i].status!=='pending'||schedule[j].status!=='pending')return;[schedule[i],schedule[j]]=[schedule[j],schedule[i]];renderSchedule()}
+function moveMatch(i,d){if(!isAdmin)return;let j=i+d;if(j<0||j>=schedule.length||schedule[i].status!=='pending'||schedule[j].status!=='pending')return;[schedule[i],schedule[j]]=[schedule[j],schedule[i]];renderSchedule()}
 function renderMatches(){$('matchList').innerHTML=results.length?results.map(m=>`<div class="item"><div><b>${m.teams.map(t=>t.join(' + ')).join(' vs ')}</b><div class="small">${m.date} · runda ${m.round}</div></div><div><b>${m.sets.join(' : ')}</b><div class="small">Wygrał: ${m.teams[m.winner].join(' + ')}</div></div></div>`).join(''):'Brak rozegranych meczów.'}
 function renderStats(){
  let stats={};results.forEach(m=>m.teams.forEach((team,i)=>team.forEach(n=>{stats[n]??={w:0,l:0,setsW:0,setsL:0,elo:1000};if(i===m.winner)stats[n].w++;else stats[n].l++;stats[n].setsW+=m.sets[i]||0;stats[n].setsL+=m.sets[1-i]||0})));
@@ -312,19 +344,152 @@ function renderStats(){
  $('ranking').innerHTML=list.length?list.sort((a,b)=>(elo[b]||1000)-(elo[a]||1000)).map((n,i)=>`<div class="item"><b>${i+1}. ${n}</b><span>${Math.round(elo[n]||1000)} ELO · ${stats[n].w}W / ${stats[n].l}L</span></div>`).join(''):'Brak wyników. Ranking ELO pojawi się po pierwszych meczach.';
 }
 function renderAdmin(){
+ queueCloudSave();
  $('adminPlayers').innerHTML=players.map((n,i)=>`<span class="playerchip">${n}<button onclick="removePlayer(${i})">×</button></span>`).join('')||'<span class="small">Brak zawodników.</span>';
  $('pausePlayers').innerHTML=players.map(n=>`<div class="item"><span>${n}</span><button class="btn ${paused.has(n)?'gold':'secondary'}" onclick="togglePlayerPause('${n.replace(/'/g,"\\'")}')">${paused.has(n)?'Wznów':'Wstrzymaj udział'}</button></div>`).join('');
 }
-function removePlayer(i){if(schedule.length){$('adminMsg').textContent='Zmiana składu po wygenerowaniu harmonogramu wymaga ponownego przeliczenia.';return}players.splice(i,1);renderAdmin()}
-function togglePlayerPause(n){paused.has(n)?paused.delete(n):paused.add(n);renderAdmin();renderSchedule();if(current&&current.teams.flat().includes(n))$('liveMsg').textContent='Uwaga: zawodnik ma ustawioną pauzę. Bieżący mecz nie został automatycznie przerwany.'}
-function addPlayer(){let n=$('addPlayerName').value.trim();if(!n)return;if(players.length>=4){$('adminMsg').textContent='W wersji demo maksymalnie 4 zawodników.';return}if(players.includes(n)){ $('adminMsg').textContent='Ten zawodnik już jest na liście.';return}players.push(n);$('addPlayerName').value='';renderAdmin();$('adminMsg').textContent='Dodano zawodnika do listy. Aby uwzględnić go w harmonogramie, przelicz rozgrywki.'}
+function removePlayer(i){if(!isAdmin)return;if(schedule.length){$('adminMsg').textContent='Zmiana składu po wygenerowaniu harmonogramu wymaga ponownego przeliczenia.';return}players.splice(i,1);renderAdmin()}
+function togglePlayerPause(n){if(!isAdmin)return;paused.has(n)?paused.delete(n):paused.add(n);renderAdmin();renderSchedule();if(current&&current.teams.flat().includes(n))$('liveMsg').textContent='Uwaga: zawodnik ma ustawioną pauzę. Bieżący mecz nie został automatycznie przerwany.'}
+function addPlayer(){if(!isAdmin)return;let n=$('addPlayerName').value.trim();if(!n)return;if(players.length>=4){$('adminMsg').textContent='W wersji demo maksymalnie 4 zawodników.';return}if(players.includes(n)){ $('adminMsg').textContent='Ten zawodnik już jest na liście.';return}players.push(n);$('addPlayerName').value='';renderAdmin();$('adminMsg').textContent='Dodano zawodnika do listy. Aby uwzględnić go w harmonogramie, przelicz rozgrywki.'}
 function exportCSV(){let rows=[['Data','Zawodnicy/Drużyny','Wynik setów','Zwycięzca','Runda'],...results.map(m=>[m.date,m.teams.map(t=>t.join(' + ')).join(' vs '),m.sets.join(':'),m.teams[m.winner].join(' + '),m.round])];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='kraken-wyniki.csv';a.click();URL.revokeObjectURL(a.href)}
-function shufflePending(){let idx=schedule.map((m,i)=>m.status==='pending'?i:-1).filter(i=>i>=0),vals=idx.map(i=>schedule[i]).sort(()=>Math.random()-.5);idx.forEach((i,k)=>schedule[i]=vals[k]);renderSchedule()}
-function rebuild(){if(!confirm('Wygenerować kolejkę od nowa? Zagrane mecze zostaną zachowane, oczekujące zostaną zastąpione.'))return;let done=schedule.filter(m=>m.status==='done'),built=generate().ordered.filter(m=>!done.some(d=>matchLabel(d)===matchLabel(m)));schedule=[...done,...built];renderSchedule()}
+function shufflePending(){if(!isAdmin)return;let idx=schedule.map((m,i)=>m.status==='pending'?i:-1).filter(i=>i>=0),vals=idx.map(i=>schedule[i]).sort(()=>Math.random()-.5);idx.forEach((i,k)=>schedule[i]=vals[k]);renderSchedule()}
+function rebuild(){if(!isAdmin)return;if(!confirm('Wygenerować kolejkę od nowa? Zagrane mecze zostaną zachowane, oczekujące zostaną zastąpione.'))return;let done=schedule.filter(m=>m.status==='done'),built=generate().ordered.filter(m=>!done.some(d=>matchLabel(d)===matchLabel(m)));schedule=[...done,...built];renderSchedule()}
 function toggleTV(on){document.body.classList.toggle('tvMode',on);$('tvExit').classList.toggle('hidden',!on);if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
 $('create').onclick=create;setCompetitionType('individual');$('undo').onclick=undo;$('finish').onclick=finish;$('pause').onclick=togglePause;$('endSession').onclick=newEvent;$('nextBtn').onclick=()=>{if(current&&!current.done){if(!confirm('Pominąć bieżący mecz?'))return;let m=schedule.find(x=>x.id===current.id);if(m)m.status='skipped'}if(settings&&settings.mode==='hardcore'){continueHardcore()}else startNext()};$('tvBtn').onclick=()=>toggleTV(true);
 $('addPlayer').onclick=addPlayer;$('export').onclick=exportCSV;$('shufflePending').onclick=shufflePending;$('rebuild').onclick=rebuild;
-$('copyLink').onclick=()=>{navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link (w wersji online będzie prowadził do podglądu).').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
-$('clear').onclick=()=>{if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();$('adminMsg').textContent='Wyczyszczono lokalną historię.'}};
-$('eventName').onchange=()=>{if(settings)settings.eventName=$('eventName').value;$('eventTitle').textContent=$('eventName').value};
+$('copyLink').onclick=()=>{navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link do podglądu online.').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
+$('clear').onclick=()=>{if(!isAdmin)return;if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();$('adminMsg').textContent='Wyczyszczono lokalną historię.'}};
+$('eventName').onchange=()=>{if(settings)settings.eventName=$('eventName').value;$('eventTitle').textContent=$('eventName').value;queueCloudSave()};
+
+// --- Firebase: logowanie administratora, zapis wydarzenia i publiczny podgląd ---
+function makeEventCode(){
+  return 'KS-'+Math.random().toString(36).slice(2,7).toUpperCase();
+}
+function snapshotState(){
+  return {
+    eventName: settings.eventName || $('eventName').value || 'Kraken Squash',
+    players, schedule, current, bracket, teamTally, hardcore,
+    results, paused:[...paused], settings, isPaused,
+    updatedAt: Date.now()
+  };
+}
+function queueCloudSave(){
+  if(!cloudReady || !isAdmin || !authUser || !eventId || applyingCloudState) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(async()=>{
+    try{
+      await fbFns.set(fbFns.ref(fbDb,'events/'+eventId),snapshotState());
+      $('cloudStatus').textContent='☁ Zapisano online';
+    }catch(err){
+      $('cloudStatus').textContent='Błąd zapisu';
+      $('authMsg').textContent='Błąd zapisu do Firebase: '+err.message;
+    }
+  },250);
+}
+function applyCloudState(data){
+  if(!data)return;
+  applyingCloudState=true;
+  try{
+    players=Array.isArray(data.players)?data.players:[];
+    schedule=Array.isArray(data.schedule)?data.schedule:[];
+    current=data.current||null;
+    bracket=data.bracket||null;
+    teamTally=data.teamTally||{blue:0,red:0};
+    hardcore=data.hardcore||null;
+    results=Array.isArray(data.results)?data.results:[];
+    localStorage.setItem('krakenV5Results',JSON.stringify(results));
+    paused=new Set(data.paused||[]);
+    settings=data.settings||{};
+    isPaused=!!data.isPaused;
+    if(data.eventName){
+      $('eventName').value=data.eventName;
+      $('eventTitle').textContent=data.eventName;
+    }
+    $('eventCode').value=eventId||'';
+    $('shareLink').value=location.href.split('#')[0]+'#event='+eventId;
+    $('setup').classList.add('hidden');
+    $('live').classList.remove('hidden');
+    $('eventTitle').textContent=data.eventName||'Kraken Squash';
+    if(current){
+      renderLive();
+    }else{
+      $('matchMeta').textContent='Oczekiwanie na rozpoczęcie meczu przez administratora.';
+      $('scoreboard').innerHTML='<div class="card" style="grid-column:1/-1;text-align:center"><h2>Rozgrywki oczekują</h2><p class="small">Administrator przygotowuje lub rozpoczyna spotkanie.</p></div>';
+      $('nextBox').innerHTML=schedule.length?'<strong>Harmonogram jest dostępny w zakładce Harmonogram.</strong>':'Brak harmonogramu.';
+    }
+    renderSchedule();renderMatches();renderStats();renderBracket();renderAdmin();
+    $('cloudStatus').textContent='☁ Połączono · '+(isAdmin?'administrator':'podgląd');
+  }finally{
+    applyingCloudState=false;
+  }
+}
+async function openEvent(code){
+  eventId=String(code||'').trim();
+  if(!eventId)return;
+  viewerMode=true;
+  $('eventCode').value=eventId;
+  $('setup').classList.add('hidden');
+  $('live').classList.remove('hidden');
+  $('eventTitle').textContent='Ładowanie rozgrywek…';
+  $('cloudStatus').textContent='Łączenie z wydarzeniem…';
+  const eventRef=fbFns.ref(fbDb,'events/'+eventId);
+  fbFns.onValue(eventRef,snap=>{
+    if(snap.exists()){
+      applyCloudState(snap.val());
+    }else{
+      $('eventTitle').textContent='Nie znaleziono rozgrywek';
+      $('matchMeta').textContent='Sprawdź kod lub link do wydarzenia.';
+      $('scoreboard').innerHTML='';
+      $('cloudStatus').textContent='Wydarzenie nie istnieje';
+    }
+  },err=>{
+    $('cloudStatus').textContent='Brak dostępu';
+    $('liveMsg').textContent='Nie udało się odczytać wydarzenia: '+err.message;
+  });
+}
+async function initFirebase(){
+  try{
+    const [appMod,authMod,dbMod]=await Promise.all([
+      import('https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'),
+      import('https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'),
+      import('https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js')
+    ]);
+    fbFns={...authMod,...dbMod};
+    fbApp=appMod.initializeApp(FIREBASE_CONFIG);
+    fbAuth=authMod.getAuth(fbApp);
+    fbDb=dbMod.getDatabase(fbApp);
+    cloudReady=true;
+    $('cloudStatus').textContent='Firebase połączony';
+    authMod.onAuthStateChanged(fbAuth,user=>{
+      authUser=user||null;
+      isAdmin=!!(user&&user.uid===ADMIN_UID);
+      $('adminControls').classList.toggle('hidden',!isAdmin);
+      $('authMsg').textContent=isAdmin?'Zalogowano jako administrator.':user?'Zalogowano, ale to konto nie ma uprawnień administratora.':'Nie zalogowano.';
+      $('loginBtn').disabled=!!user;
+      $('logoutBtn').disabled=!user;
+      if(viewerMode && eventId)$('cloudStatus').textContent='☁ Podgląd online';
+      else $('cloudStatus').textContent=isAdmin?'☁ Administrator online':'Firebase gotowy';
+      if(current)renderLive();
+    });
+    $('loginBtn').onclick=async()=>{
+      const email=$('adminEmail').value.trim(),password=$('adminPassword').value;
+      if(!email||!password){$('authMsg').textContent='Wpisz e-mail i hasło.';return;}
+      try{
+        await authMod.signInWithEmailAndPassword(fbAuth,email,password);
+        $('adminPassword').value='';
+      }catch(err){$('authMsg').textContent='Logowanie nieudane: '+err.message;}
+    };
+    $('logoutBtn').onclick=async()=>{
+      try{await authMod.signOut(fbAuth);}catch(err){$('authMsg').textContent=err.message;}
+    };
+    const code=new URLSearchParams(location.hash.slice(1)).get('event');
+    if(code)await openEvent(code);
+  }catch(err){
+    $('cloudStatus').textContent='Błąd Firebase';
+    $('authMsg').textContent='Nie udało się uruchomić Firebase: '+err.message;
+    console.error(err);
+  }
+}
+initFirebase();
+
 </script></body></html>
