@@ -60,13 +60,20 @@ main{max-width:1100px;margin:auto;padding:0 14px 45px}.card{background:var(--pan
 <h3 class="section-title" style="margin-top:18px">Zawodnicy</h3><div id="adminPlayers"></div><div class="row"><input id="addPlayerName" placeholder="Imię nowego gracza"><button class="btn secondary" id="addPlayer">+ Dodaj zawodnika</button></div>
 <div class="callout small">W wersji online dodawanie, pauzowanie i zmiany kolejki będą dostępne wyłącznie dla administratora po zalogowaniu.</div>
 <h3 class="section-title" style="margin-top:18px">Pauza i nieobecności</h3><div id="pausePlayers"></div>
-<h3 class="section-title" style="margin-top:18px">Dołączanie do rozgrywek</h3><div class="row"><div><label>Link do podglądu (demo)</label><input id="shareLink" readonly></div><button class="btn secondary" id="copyLink">Kopiuj link</button></div><div id="qrArea" class="small">Kod QR i publiczny link będą aktywne po opublikowaniu aplikacji online.</div>
+<h3 class="section-title" style="margin-top:18px">Dołączanie do rozgrywek</h3><div class="row"><div><label>Link do podglądu (demo)</label><input id="shareLink" readonly></div><button class="btn secondary" id="copyLink">Kopiuj link</button></div><div id="qrArea" style="margin-top:14px;padding:14px;background:#101812;border:1px solid var(--line);border-radius:14px;text-align:center">
+  <div style="font-weight:850;margin-bottom:8px;color:var(--lime)">ZESKANUJ, ABY DOŁĄCZYĆ</div>
+  <div id="qrCode" style="display:inline-flex;align-items:center;justify-content:center;background:white;padding:10px;border-radius:10px;min-width:220px;min-height:220px">
+    <span style="color:#333;font-size:12px">Kod QR pojawi się po utworzeniu rozgrywki.</span>
+  </div>
+  <div class="small" style="margin-top:9px">Zeskanuj aparatem telefonu. Otworzy się publiczny podgląd wyników tej rozgrywki.</div>
+</div>
 <div class="row" style="margin-top:15px"><button class="btn secondary" id="export">Eksportuj wyniki CSV</button><button class="btn danger" id="clear">Usuń lokalne dane demo</button></div><div id="adminMsg" class="toast"></div>
 </div>
 </div>
 </section>
 <div class="footer">Kraken Squash LiveScore · V6 · Firebase</div>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 let players=[],schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=JSON.parse(localStorage.getItem('krakenV5Results')||'[]'),paused=new Set(),settings={},isPaused=false;
@@ -233,6 +240,7 @@ function create(){
  if(!eventId)eventId=makeEventCode();
  $('eventCode').value=eventId;
  $('shareLink').value=location.href.split('#')[0]+'#event='+eventId;
+ renderQRCode($('shareLink').value);
  queueCloudSave();
  renderAdmin();renderSchedule();
 }
@@ -357,11 +365,25 @@ function rebuild(){if(!isAdmin)return;if(!confirm('Wygenerować kolejkę od nowa
 function toggleTV(on){document.body.classList.toggle('tvMode',on);$('tvExit').classList.toggle('hidden',!on);if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
 $('create').onclick=create;setCompetitionType('individual');$('undo').onclick=undo;$('finish').onclick=finish;$('pause').onclick=togglePause;$('endSession').onclick=newEvent;$('nextBtn').onclick=()=>{if(current&&!current.done){if(!confirm('Pominąć bieżący mecz?'))return;let m=schedule.find(x=>x.id===current.id);if(m)m.status='skipped'}if(settings&&settings.mode==='hardcore'){continueHardcore()}else startNext()};$('tvBtn').onclick=()=>toggleTV(true);
 $('addPlayer').onclick=addPlayer;$('export').onclick=exportCSV;$('shufflePending').onclick=shufflePending;$('rebuild').onclick=rebuild;
-$('copyLink').onclick=()=>{navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link do podglądu online.').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
+$('copyLink').onclick=()=>{renderQRCode($('shareLink').value);navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link do podglądu online.').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
 $('clear').onclick=()=>{if(!isAdmin)return;if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();$('adminMsg').textContent='Wyczyszczono lokalną historię.'}};
 $('eventName').onchange=()=>{if(settings)settings.eventName=$('eventName').value;$('eventTitle').textContent=$('eventName').value;queueCloudSave()};
 
 // --- Firebase: logowanie administratora, zapis wydarzenia i publiczny podgląd ---
+function renderQRCode(url){
+  const box=$('qrCode');
+  if(!box)return;
+  box.innerHTML='';
+  if(!url){
+    box.innerHTML='<span style="color:#333;font-size:12px">Kod QR pojawi się po utworzeniu rozgrywki.</span>';
+    return;
+  }
+  if(typeof QRCode==='undefined'){
+    box.innerHTML='<span style="color:#333;font-size:12px">Nie udało się załadować generatora QR. Odśwież stronę.</span>';
+    return;
+  }
+  new QRCode(box,{text:url,width:200,height:200,colorDark:'#101510',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+}
 function makeEventCode(){
   return 'KS-'+Math.random().toString(36).slice(2,7).toUpperCase();
 }
@@ -407,6 +429,7 @@ function applyCloudState(data){
     }
     $('eventCode').value=eventId||'';
     $('shareLink').value=location.href.split('#')[0]+'#event='+eventId;
+    renderQRCode($('shareLink').value);
     $('setup').classList.add('hidden');
     $('live').classList.remove('hidden');
     $('eventTitle').textContent=data.eventName||'Kraken Squash';
