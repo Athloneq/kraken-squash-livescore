@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101512"><title>Kraken Squash LiveScore V3</title>
+<style>
+:root{--bg:#0b100d;--panel:#171f19;--panel2:#222d25;--line:#39483d;--lime:#c8ff50;--text:#f2f6ef;--muted:#aab6aa;--red:#ff7777;--gold:#ffd36a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}header{max-width:1100px;margin:auto;padding:17px 15px 9px;display:flex;align-items:center;justify-content:space-between;gap:8px}h1{font-size:19px;margin:0}h1 span{color:var(--lime)}.tag,.badge{font-size:10px;border:1px solid #627b39;color:var(--lime);padding:5px 9px;border-radius:20px;white-space:nowrap}
+nav{max-width:1100px;margin:8px auto 16px;padding:0 12px;display:flex;gap:6px;overflow:auto}nav button{flex:1;min-width:max-content;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:transparent;color:var(--muted);font-weight:750}nav button.active{background:var(--lime);color:#10150d;border-color:var(--lime)}
+main{max-width:1100px;margin:auto;padding:0 14px 45px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.row>*{flex:1;min-width:125px}label{display:block;color:var(--muted);font-size:12px;margin:11px 0 5px}input,select{width:100%;background:#0e1510;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}button{font:inherit;cursor:pointer}.btn{background:var(--lime);color:#11170d;border:0;border-radius:10px;padding:11px 14px;font-weight:850}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.btn.danger{background:#482626;color:#ffe1e1}.btn.gold{background:#5a4722;color:#ffe6aa}.small{font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.hidden{display:none!important}.section-title{font-size:18px;margin:0 0 11px}.toast{color:var(--lime);font-size:12px;margin-top:8px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.stat{background:var(--panel2);padding:13px;border-radius:11px}.stat strong{font-size:25px;color:var(--lime);display:block}.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:9px}.side{min-height:245px;border:1px solid var(--line);border-radius:16px;background:var(--panel2);color:var(--text);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px;touch-action:manipulation}.side:active{filter:brightness(1.18)}.side.blue{border:3px solid #319cff;background:linear-gradient(145deg,#102b43,#1b2734)}.side.red{border:3px solid #ff525e;background:linear-gradient(145deg,#431b25,#302027)}.side .teamtag{font-size:11px;letter-spacing:1px;font-weight:900;margin-bottom:7px}.side.blue .teamtag{color:#62baff}.side.red .teamtag{color:#ff858b}.bracket-round{display:inline-block;vertical-align:top;min-width:180px;margin:5px;padding:9px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}.bracket-match{padding:8px;margin:6px 0;background:#111812;border-radius:8px;font-size:12px}.bracket-match.won{border-left:3px solid var(--lime)}.side .name{font-size:clamp(17px,4vw,25px);font-weight:850;text-align:center}.points{font-size:clamp(68px,17vw,112px);font-weight:950;line-height:1.1;color:var(--lime)}.hint{text-align:center;color:var(--muted);font-size:12px;margin:9px}.nextbox{background:#202d1e;border:1px solid #617c37;border-radius:13px;padding:13px;margin:10px 0}.nextbox strong{font-size:20px;color:var(--lime)}.schedule{display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.schedule.current{color:var(--lime)}.schedule.done{opacity:.55}.pill{font-size:10px;background:#2d3b2c;color:var(--lime);padding:4px 7px;border-radius:15px}.playerchip{display:inline-flex;gap:6px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:6px 10px;margin:3px}.playerchip button{background:none;border:0;color:var(--red);font-weight:bold}.callout{background:#20271f;border-left:3px solid var(--lime);padding:10px 12px;border-radius:7px;margin:9px 0}.warning{color:var(--gold)}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{padding:15px;border:2px solid var(--line);border-radius:13px;background:var(--panel2);text-align:left;color:var(--text);min-height:85px}.choice.selected{border-color:var(--lime);background:#26351f}.choice b{display:block;font-size:17px;margin-bottom:4px}.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.podium div{background:var(--panel2);border-radius:12px;padding:12px 5px}.podium strong{display:block;font-size:24px}.hardcore-current{border:2px solid var(--gold);background:#342b17;border-radius:12px;padding:12px;margin:10px 0}.tvMode header,.tvMode nav,.tvMode .no-tv{display:none!important}.tvMode main{max-width:1500px}.tvMode .side{min-height:55vh}.tvMode .points{font-size:clamp(100px,22vw,240px)}.tvMode .side .name{font-size:clamp(28px,5vw,60px)}.tvMode #tvExit{display:block!important}.tvMode #live{padding-top:12px}.footer{text-align:center;color:#718071;font-size:11px;padding:14px}
+@media(min-width:700px){.statgrid{grid-template-columns:repeat(4,1fr)}.side{min-height:310px}}
+</style></head><body>
+<header><h1>🦑 KRAKEN <span>Squash LiveScore</span></h1><span class="tag">V3 · PROTOTYP</span></header>
+<nav class="no-tv"><button class="active" data-tab="game">Gra</button><button data-tab="schedule">Harmonogram</button><button data-tab="matches">Mecze</button><button data-tab="stats">Ranking</button><button data-tab="admin">Panel admina</button></nav>
+<main>
+<section id="game">
+<div id="setup" class="card">
+<h2 class="section-title">Kreator rozgrywek</h2>
+<h3 class="section-title">1. Wybierz rodzaj rozgrywek</h3>
+<div class="choice-grid"><button type="button" class="choice selected" id="individualChoice"><b>👤 Indywidualna</b><span class="small">Każdy zawodnik walczy na własny wynik.</span></button><button type="button" class="choice" id="teamChoice"><b>👥 Drużynowa</b><span class="small">Dwie drużyny zdobywają wspólne punkty.</span></button></div>
+<input type="hidden" id="competitionType" value="individual">
+<div class="row"><div><label>2. Wybierz tryb gry</label><select id="mode"><option value="champion">Turniejowy — drabinka pucharowa</option><option value="equal">Równa gra — każdy tyle samo gier</option><option value="hardcore">Hardcore — zwycięzca zostaje</option></select></div><div><label>Format meczu</label><select id="kind"><option value="single">Single — 1 vs 1</option><option value="doubles">Debel — 2 vs 2</option><option value="team">Pojedynki 1 vs 1 dla drużyn</option></select></div></div>
+<div id="modeDescription" class="callout small">Turniej pucharowy: przegrany odpada, zwycięzcy przechodzą do kolejnej rundy. Na końcu podium i klasyfikacja.</div>
+<label>Uczestnicy (2–4 osoby)</label><div class="grid2"><input id="p1" value="Adam" placeholder="Gracz 1"><input id="p2" value="Bartek" placeholder="Gracz 2"><input id="p3" value="Tomek" placeholder="Gracz 3"><input id="p4" value="Michał" placeholder="Gracz 4"></div>
+<div class="callout small">Możesz usunąć puste pola. Debel wymaga 4 osób. Tryb drużynowy dzieli 4 graczy na zespoły A i B (pierwszych dwóch i kolejnych dwóch).</div>
+<div class="card" style="background:#111812">
+<h3 class="section-title">Generator harmonogramu</h3>
+<div class="row"><div><label>Liczba rund</label><select id="rounds"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option><option value="20">20</option><option value="infinite">∞ Bez końca</option><option value="custom">Własna liczba</option></select></div><div id="customWrap" class="hidden"><label>Własne rundy</label><input id="customRounds" type="number" min="1" max="500" value="12"></div><div><label>Liczba kortów</label><select id="courts"><option>1</option><option>2</option></select></div></div>
+<div class="row"><div><label>Szacowany czas meczu</label><select id="matchMins"><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div><div><label>Minimalny odpoczynek (min)</label><select id="restMins"><option>0</option><option>10</option><option selected>15</option><option>20</option><option>30</option></select></div><div><label>Układanie kolejki</label><select id="algorithm"><option value="balanced">Inteligentne — wyrównuj przerwy i pary</option><option value="random">Losowa kolejność</option></select></div></div>
+<div class="row"><div><label>Powtarzanie przeciwników</label><select id="repeatOpp"><option value="min">Unikaj powtórek, jeśli możliwe</option><option value="allow">Dozwolone</option></select></div><div><label>Automatyczne następne spotkanie</label><select id="autoNext"><option value="manual">Ręczne uruchomienie</option><option value="auto">Automatycznie po zapisaniu</option></select></div></div>
+<p class="small">Generator bierze pod uwagę liczbę kortów, długość meczu, minimalny odpoczynek, równą liczbę występów i unikanie powtórek. Dla 2 kortów harmonogram może zawierać równoległe mecze.</p>
+</div>
+<div class="row"><div><label>Punkty w secie</label><select id="target"><option>11</option><option>15</option><option>21</option></select></div><div><label>Format setów</label><select id="best"><option value="1">1 set</option><option value="3" selected>Best of 3</option><option value="5">Best of 5</option></select></div><div><label>Zasada końcówki</label><select id="deuce"><option value="two">Przewaga 2 punktów</option><option value="sudden">Nagła śmierć po 10:10</option></select></div></div>
+<button class="btn" id="create">UTWÓRZ HARMONOGRAM</button><div id="setupMsg" class="toast"></div>
+</div>
+<div id="live" class="hidden">
+<div class="card"><div class="row"><div><b id="eventTitle">Kraken Squash</b><div class="small" id="matchMeta"></div></div><span class="pill" id="setLabel">SET 1</span></div></div>
+<div id="nextBox" class="nextbox"></div>
+<div class="scoreboard" id="scoreboard"></div><div class="hint">Kliknij połowę kortu zwycięzcy wymiany, aby dodać punkt.</div>
+<div class="row no-tv"><button class="btn secondary" id="undo">↶ Cofnij punkt</button><button class="btn secondary" id="finish">Zakończ mecz</button><button class="btn secondary" id="pause">Pauza</button><button class="btn danger" id="endSession">Zakończ sesję</button></div>
+<div class="row no-tv" style="margin-top:8px"><button class="btn secondary" id="tvBtn">⛶ Tryb telewizora</button><button class="btn secondary" id="nextBtn">Następny mecz</button></div>
+<button id="tvExit" class="btn secondary hidden" onclick="toggleTV(false)">Wyjdź z trybu TV</button>
+<div id="liveMsg" class="toast"></div>
+</div></section>
+<section id="schedule" class="hidden">
+<div class="card"><h2 class="section-title">Podsumowanie rozgrywek</h2><div id="modeSummary" class="small">Podsumowanie pojawi się po zakończeniu rozgrywek.</div></div><div class="card"><h2 class="section-title">Drabinka turniejowa</h2><div id="bracketView" class="small">Drabinka pojawi się po uruchomieniu trybu Champion.</div></div><div class="card"><h2 class="section-title">Klasyfikacja turnieju</h2><div id="classification" class="small">Klasyfikacja pojawi się po pierwszych meczach.</div></div><div class="card"><h2 class="section-title">Harmonogram i kolejka</h2><div id="scheduleSummary" class="small">Najpierw utwórz rozgrywki.</div><div id="upNext" class="nextbox hidden"></div><div id="scheduleList"></div></div>
+<div class="card"><h3 class="section-title">Zarządzanie kolejką</h3><div class="row"><button class="btn secondary" id="shufflePending">Losuj nierozpoczęte mecze</button><button class="btn secondary" id="rebuild">Przelicz harmonogram</button></div><p class="small">Administrator może przestawić oczekujące mecze przyciskami ↑ i ↓ na liście. Zagrane mecze pozostają w historii.</p></div>
+</section>
+<section id="matches" class="hidden"><div class="card"><h2 class="section-title">Historia spotkań</h2><div id="matchList" class="muted">Brak meczów.</div></div></section>
+<section id="stats" class="hidden"><div class="card"><h2 class="section-title">Statystyki i ranking</h2><div id="statsGrid" class="statgrid"></div></div><div class="card"><h3 class="section-title">Ranking zawodników</h3><div id="ranking"></div></div></section>
+<section id="admin" class="hidden">
+<div class="card"><h2 class="section-title">Panel administratora</h2><div class="row"><div><label>Nazwa wydarzenia</label><input id="eventName" value="Kraken Squash Night"></div><div><label>Kod rozgrywek</label><input id="eventCode" readonly value="KRAKEN-DEMO"></div></div>
+<h3 class="section-title" style="margin-top:18px">Zawodnicy</h3><div id="adminPlayers"></div><div class="row"><input id="addPlayerName" placeholder="Imię nowego gracza"><button class="btn secondary" id="addPlayer">+ Dodaj zawodnika</button></div>
+<div class="callout small">W wersji online dodawanie, pauzowanie i zmiany kolejki będą dostępne wyłącznie dla administratora po zalogowaniu.</div>
+<h3 class="section-title" style="margin-top:18px">Pauza i nieobecności</h3><div id="pausePlayers"></div>
+<h3 class="section-title" style="margin-top:18px">Dołączanie do rozgrywek</h3><div class="row"><div><label>Link do podglądu (demo)</label><input id="shareLink" readonly></div><button class="btn secondary" id="copyLink">Kopiuj link</button></div><div id="qrArea" class="small">Kod QR i publiczny link będą aktywne po opublikowaniu aplikacji online.</div>
+<div class="row" style="margin-top:15px"><button class="btn secondary" id="export">Eksportuj wyniki CSV</button><button class="btn danger" id="clear">Usuń lokalne dane demo</button></div><div id="adminMsg" class="toast"></div>
+</div>
+</section>
+<div class="footer">Kraken Squash LiveScore · V3 · prototyp lokalny</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let players=[],schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=JSON.parse(localStorage.getItem('krakenV5Results')||'[]'),paused=new Set(),settings={},isPaused=false;
+const uid=()=>Math.random().toString(36).slice(2,9);
+function tab(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='schedule')renderSchedule();if(id==='matches')renderMatches();if(id==='stats')renderStats();if(id==='admin')renderAdmin()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+$('rounds').onchange=()=> $('customWrap').classList.toggle('hidden',$('rounds').value!=='custom');
+function namesFromInputs(){return ['p1','p2','p3','p4'].map(id=>$(id).value.trim()).filter(Boolean)}
+function combos(a){let out=[];for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++)out.push([a[i],a[j]]);return out}
+function teamDoubles(a){let out=[];for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){let rest=a.filter((_,k)=>k!==i&&k!==j);out.push([[a[i],a[j]],rest])}return out}
+function scoreSchedule(candidates,placed,restMs,seen){
+ let score=0, last={};placed.forEach((m,idx)=>m.teams.flat().forEach(n=>last[n]=idx));
+ let lastIdx=placed.length;
+ for(const n of candidates.teams.flat()){if(last[n]!==undefined){let gap=lastIdx-last[n]-1;score+=Math.max(0,restMs-gap*settings.matchMins)*4;}}
+ let pair=candidates.teams.map(t=>t.slice().sort().join('+')).sort().join('|');
+ if(settings.repeatOpp==='min'&&seen.has(pair))score+=10000;
+ score+=Math.random()*2;return score;
+}
+function buildCandidatePool(){
+ let pool=[];
+ if(settings.kind==='single'){combos(players).forEach(t=>pool.push({teams:[[t[0]],[t[1]]]}))}
+ else if(settings.kind==='doubles'){teamDoubles(players).forEach(t=>pool.push({teams:t}))}
+ else {pool.push({teams:[[players[0]],[players[2]]],teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],teamNames:['Niebiescy','Czerwoni']});}
+ return pool;
+}
+function generate(){
+ let rounds=$('rounds').value==='infinite'?Infinity:$('rounds').value==='custom'?Math.max(1,Math.min(500,+$('customRounds').value||1)):+$('rounds').value;
+ let pool=buildCandidatePool(),ordered=[],seen=new Set(),lastRound=0;
+ let finite=Number.isFinite(rounds)?rounds:1;
+ for(let r=1;r<=finite;r++){
+  let roundPool=pool.slice();
+  if(settings.algorithm==='random')roundPool.sort(()=>Math.random()-.5);
+  else {
+   let temp=[],remaining=roundPool.slice();
+   while(remaining.length){remaining.sort((a,b)=>scoreSchedule(a,ordered,settings.restMins,seen)-scoreSchedule(b,ordered,settings.restMins,seen));let chosen=remaining.shift();temp.push(chosen);let pair=chosen.teams.map(t=>t.slice().sort().join('+')).sort().join('|');seen.add(pair)}
+   roundPool=temp;
+  }
+  // With two courts, schedule pairs into a time slot; otherwise sequential.
+  roundPool.forEach((m,i)=>ordered.push({...m,id:uid(),round:r,slot:Math.floor(i/settings.courts)+1,court:(i%settings.courts)+1,status:'pending'}));
+ }
+ return {rounds,ordered,pool};
+}
+
+function makeBracket(names){
+ let pairs=names.length===2?[[names[0],names[1]]]:names.length===3?[[names[1],names[2]]]:[[names[0],names[3]],[names[1],names[2]]];
+ let rounds=[pairs.map((p,i)=>({teams:[[p[0]],[p[1]]],winner:null,loser:null,bye:false,label:names.length===2?'Finał':'Półfinał '+(i+1)}))];
+ return {rounds,placements:[],champion:null,runnerUp:null};
+}
+function advanceByes(){
+ if(!bracket)return;
+ // For a three-player bracket, the top seed gets a bye to the final.
+ if(players.length===3 && bracket.rounds[0].length===1){
+   bracket.byePlayer=players[0];
+ }
+}
+function updateBracketAfterMatch(winnerName,loserName){
+ if(!bracket||settings.mode!=='champion'||settings.kind!=='single')return;
+ let match=schedule.find(m=>m.id===current.id);
+ if(!match)return;
+ match.winnerName=winnerName;match.loserName=loserName;
+ bracket.placements.push({name:loserName,place:bracket.placements.length+2});
+ let roundIndex=match.bracketRound||0;
+ let roundMatches=schedule.filter(m=>m.bracketRound===roundIndex);
+ if(roundMatches.every(m=>m.status==='done')){
+   if(players.length===2){bracket.champion=winnerName;bracket.runnerUp=loserName;}
+   else if(players.length===3){
+     if(roundIndex===0){
+       let finalist=roundMatches[0].winnerName;
+       let final={teams:[[bracket.byePlayer],[finalist]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'};
+       schedule.push(final);
+     } else {bracket.champion=winnerName;bracket.runnerUp=loserName;}
+   } else if(players.length===4 && roundIndex===0){
+     let winners=roundMatches.map(m=>m.winnerName);
+     schedule.push({teams:[[winners[0]],[winners[1]]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'});
+   } else {bracket.champion=winnerName;bracket.runnerUp=loserName;}
+ }
+}
+function renderBracket(){
+ let el=$('bracketView'),cl=$('classification');
+ if(!bracket){el.textContent='Drabinka turniejowa jest dostępna w trybie Champion (Single).';cl.textContent='Klasyfikacja pojawi się po pierwszych meczach.';return}
+ let rounds=[...new Set(schedule.filter(m=>m.bracketRound!==undefined).map(m=>m.bracketRound))].sort((a,b)=>a-b);
+ el.innerHTML=rounds.map(r=>`<div class="bracket-round"><b>${r===0?(players.length===2?'Finał':'Półfinały'):'Finał'}</b>${schedule.filter(m=>m.bracketRound===r).map(m=>`<div class="bracket-match ${m.status==='done'?'won':''}">${m.teams[0][0]} <b>vs</b> ${m.teams[1][0]}<br><span class="small">${m.status==='done'?'Zwycięzca: '+(m.winnerName||'—'):'Oczekuje na rozegranie'}</span></div>`).join('')}</div>`).join('');
+ let rows=[];
+ if(bracket.champion)rows.push(['🏆',bracket.champion,'Mistrz turnieju']);
+ if(bracket.runnerUp)rows.push(['🥈',bracket.runnerUp,'Drugie miejsce']);
+ bracket.placements.forEach((x,i)=>rows.push([players.length===3?'🥉':'🎖️',x.name,players.length===3?'Trzecie miejsce':'Odpadł w półfinale']));
+ if(!rows.length)cl.textContent='Klasyfikacja zostanie uzupełniona po zakończeniu kolejnych meczów.';
+ else cl.innerHTML=rows.map(r=>`<div class="item"><b style="font-size:20px">${r[0]} ${r[1]}</b><span>${r[2]}</span></div>`).join('');
+}
+function renderTeamTally(){
+ if(settings.kind!=='team')return;
+ $('nextBox').insertAdjacentHTML('beforeend',`<div class="small" style="margin-top:8px">WYNIK DRUŻYN · 🔵 Niebiescy ${teamTally.blue} : ${teamTally.red} 🔴 Czerwoni</div>`);
+}
+
+function setCompetitionType(type){
+ $('competitionType').value=type;
+ $('individualChoice').classList.toggle('selected',type==='individual');
+ $('teamChoice').classList.toggle('selected',type==='team');
+ let mode=$('mode');
+ if(type==='individual'){
+  mode.innerHTML='<option value="champion">Turniejowy — drabinka pucharowa</option><option value="equal">Równa gra — każdy tyle samo gier</option><option value="hardcore">Hardcore — zwycięzca zostaje</option>';
+  $('kind').innerHTML='<option value="single">Single — 1 vs 1</option><option value="doubles">Debel — 2 vs 2</option>';
+ }else{
+  mode.innerHTML='<option value="team_league">Liga drużynowa — mecze 1 vs 1</option><option value="team_cup">Turniej drużynowy — mecze 1 vs 1</option>';
+  $('kind').innerHTML='<option value="team">Pojedynki 1 vs 1 dla drużyn</option><option value="doubles">Debel 2 vs 2</option>';
+ }
+ updateModeDescription();
+}
+function updateModeDescription(){
+ let t=$('competitionType').value,m=$('mode').value;
+ let text='';
+ if(t==='individual'&&m==='champion')text='Turniej pucharowy: przegrany odpada, zwycięzcy przechodzą dalej. Na końcu klasyfikacja z pucharami.';
+ else if(t==='individual'&&m==='equal')text='Generator układa kolejkę tak, aby każdy rozegrał tyle samo meczów, z możliwie równymi przerwami.';
+ else if(t==='individual'&&m==='hardcore')text='Hardcore: zwycięzca zostaje na korcie, przegrany schodzi i wraca na koniec kolejki. Za kolejne wygrane z rzędu zdobywasz kolejno 1, 2, 3… punktów. Minimum 3 graczy.';
+ else if(m==='team_league')text='Liga drużynowa: dwie ekipy po dwóch graczy. Rozgrywane są pojedynki 1 vs 1, a każde zwycięstwo daje punkt drużynie.';
+ else text='Puchar drużynowy: dwie drużyny rywalizują w pojedynkach 1 vs 1. Wynik drużynowy decyduje o awansie.';
+ $('modeDescription').textContent=text;
+ $('kind').parentElement.classList.toggle('hidden',t==='team');
+}
+$('individualChoice').onclick=()=>setCompetitionType('individual');
+$('teamChoice').onclick=()=>setCompetitionType('team');
+$('mode').onchange=updateModeDescription;
+
+function create(){
+ players=namesFromInputs();let kind=$('competitionType').value==='team'?'team':$('kind').value;
+ if(players.length<2||players.length>4){$('setupMsg').textContent='Podaj od 2 do 4 zawodników.';return}
+ if(kind==='doubles'&&players.length!==4){$('setupMsg').textContent='Debel wymaga dokładnie 4 zawodników.';return}
+ if(kind==='team'&&players.length!==4){$('setupMsg').textContent='Rozgrywki drużynowe wymagają dokładnie 4 zawodników (2 na 2).';return}
+ if($('competitionType').value==='individual'&&$('mode').value==='hardcore'&&players.length<3){$('setupMsg').textContent='Hardcore wymaga minimum 3 zawodników: zwycięzca zostaje, przegrany schodzi.';return}
+ settings={kind,competitionType:$('competitionType').value,mode:$('mode').value,infinite:$('rounds').value==='infinite',algorithm:$('algorithm').value,restMins:+$('restMins').value,matchMins:+$('matchMins').value,courts:+$('courts').value,repeatOpp:$('repeatOpp').value,autoNext:$('autoNext').value,target:+$('target').value,best:+$('best').value,deuce:$('deuce').value,eventName:$('eventName').value||'Kraken Squash'};
+ let built=generate();schedule=built.ordered;
+ bracket=null;hardcore=null;teamTally={blue:0,red:0};
+ if(settings.mode==='hardcore'){
+   let shuffled=$('algorithm').value==='random'?players.slice().sort(()=>Math.random()-.5):players.slice();
+   hardcore={queue:shuffled.slice(2),king:shuffled[0],challenger:shuffled[1],streak:0,points:Object.fromEntries(players.map(n=>[n,0])),wins:Object.fromEntries(players.map(n=>[n,0])),played:0};
+   schedule=[];
+ } else if(settings.competitionType==='team' && settings.mode==='team_league'){
+   schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
+ } else if(settings.competitionType==='team' && settings.mode==='team_cup'){
+   schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
+ } else if(settings.mode==='champion' && settings.kind==='single'){
+   bracket=makeBracket(players);
+   schedule=bracket.rounds[0].map((m,i)=>({...m,id:uid(),round:1,slot:i+1,court:1,status:m.bye?'done':'pending',bracketRound:0,bracketIndex:i}));
+   advanceByes();
+ } else if(settings.mode==='champion' && settings.kind==='team'){
+   // Drużynowy Champion: dwa zespoły, pojedynki 1v1, każdy zawodnik gra z rywalem z drugiej drużyny.
+   schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
+ }
+ current=null;if(settings.mode==='hardcore')launchHardcoreMatch();else startNext();$('setup').classList.add('hidden');$('live').classList.remove('hidden');$('eventTitle').textContent=settings.eventName;
+ $('shareLink').value=location.href.split('#')[0]+'#event='+($('eventCode').value||'KRAKEN-DEMO');
+ renderAdmin();renderSchedule();
+}
+
+function launchHardcoreMatch(){
+ if(!hardcore)return;
+ if(!hardcore.queue.length){
+  // With only the current champion left in rotation, cycle previous challengers back in.
+  hardcore.queue=players.filter(n=>n!==hardcore.king);
+ }
+ let challenger=hardcore.queue.shift();
+ if(!challenger){$('liveMsg').textContent='Brak kolejnego rywala.';return}
+ hardcore.challenger=challenger;
+ let item={id:uid(),teams:[[hardcore.king],[challenger]],round:hardcore.played+1,slot:1,court:1,status:'playing'};
+ current={id:item.id,teams:item.teams,round:item.round,slot:1,court:1,points:[0,0],sets:[0,0],setNo:1,done:false};
+ history=[];renderLive();
+}
+function activeMatch(){return schedule.find(m=>m.status==='playing')}
+function nextPending(){return schedule.find(m=>m.status==='pending'&&!m.teams.flat().some(n=>paused.has(n)))}
+function startNext(){
+ let m=nextPending();
+ if(!m && settings.infinite){
+  let extra=generate().ordered, maxRound=schedule.reduce((v,x)=>Math.max(v,x.round),0);
+  extra.forEach(x=>{x.id=uid();x.round+=maxRound;x.status='pending'});
+  schedule.push(...extra);m=nextPending();renderSchedule();
+ }
+ if(!m){$('liveMsg').textContent='Brak dostępnych spotkań. Wznów pauzujących zawodników albo sprawdź harmonogram.';return}
+ m.status='playing';current={id:m.id,teams:m.teams,round:m.round,slot:m.slot,court:m.court,points:[0,0],sets:[0,0],setNo:1,done:false};
+ history=[];isPaused=false;renderLive();
+}
+function matchLabel(m){return m.teams.map(t=>t.join(' + ')).join(' vs ')}
+function upcoming(){return schedule.filter(m=>m.status==='pending'&&!m.teams.flat().some(n=>paused.has(n))).slice(0,3)}
+function renderLive(){
+ if(!current)return;
+ $('matchMeta').textContent=settings.mode==='hardcore'?`HARDCORE · Zwycięzca zostaje · seria: ${hardcore.streak} · punkty do tej pory: ${hardcore.points[hardcore.king]}`:`Runda ${current.round} · Slot ${current.slot} · Kort ${current.court} · ${settings.kind==='doubles'?'Debel':settings.kind==='team'?'Drużyny · Niebiescy vs Czerwoni':'Single'}`;
+ $('setLabel').textContent=`SET ${current.setNo} · SETY ${current.sets.join(' : ')}`;
+ $('scoreboard').innerHTML=current.teams.map((team,i)=>`<button class="side ${i===0?'blue':'red'}" onclick="addPoint(${i})"><div class="teamtag">${i===0?'🔵 NIEBIESCY':'🔴 CZERWONI'}</div><div class="name">${team.join(' + ')}</div><div class="points">${current.points[i]}</div><div class="small">sety: ${current.sets[i]}</div><div class="small">DODAJ PUNKT ＋</div></button>`).join('');
+ let next=upcoming()[0];if(settings.mode==='hardcore'){$('nextBox').innerHTML=`<div class="hardcore-current"><div class="small">🔥 HARDCORE — ZWYCIĘZCA ZOSTAJE NA KORCIE</div><b>${hardcore.king}</b> broni kortu · <b>${hardcore.challenger}</b> rzuca wyzwanie.<div class="small">Następny w kolejce: ${hardcore.queue[0]||'kolejka zostanie uzupełniona'}</div></div>`;return}$('nextBox').innerHTML=next?`<div class="small">NASTĘPNY MECZ · RUNDA ${next.round} · KORT ${next.court}</div><strong>${matchLabel(next)}</strong><div class="small">Mecz ${schedule.indexOf(next)+1} z ${schedule.length}${Number.isFinite(+schedule.length)?'':''}</div>`:'<div class="small">Brak dostępnych następnych spotkań. Sprawdź pauzujących zawodników lub zakończ rundy.</div>';
+ $('liveMsg').textContent=isPaused?'Mecz wstrzymany.': '';
+}
+function addPoint(i){
+ if(!current||current.done||isPaused)return;history.push(JSON.stringify(current));current.points[i]++;
+ let [a,b]=current.points,w=-1,t=settings.target;
+ if(settings.deuce==='sudden'&&a>=t-1&&b>=t-1){if(a!==b)w=a>b?0:1}
+ else if(Math.max(a,b)>=t&&Math.abs(a-b)>=2)w=a>b?0:1;
+ if(w>=0){current.sets[w]++;if(current.sets[w]>=Math.ceil(settings.best/2)){complete(w);return}current.setNo++;current.points=[0,0]}
+ renderLive();
+}
+function complete(w){
+ current.done=true;
+ if(settings.mode==='hardcore'){
+  let winner=current.teams[w][0],loser=current.teams[1-w][0];
+  hardcore.played++;let award;if(winner===hardcore.king){hardcore.streak++;award=hardcore.streak;hardcore.points[winner]+=award;hardcore.wins[winner]++;}
+  else {award=1;hardcore.points[winner]+=award;hardcore.wins[winner]++;hardcore.streak=1;hardcore.king=winner;}
+  hardcore.queue.push(loser);
+  let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:hardcore.played,kind:'hardcore',mode:'hardcore',winnerName:winner,loserName:loser,pointsAwarded:award};
+  results.unshift(rec);localStorage.setItem('krakenV4Results',JSON.stringify(results));
+  $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${winner} wygrywa!</h2><p>${loser} schodzi z kortu.</p><p>Zdobyte punkty: +${award}</p><button class="btn" onclick="continueHardcore()">NASTĘPNY RYWAL</button></div>`;
+  renderHardcoreClassification();renderSchedule();renderStats();if(settings.autoNext==='auto')setTimeout(continueHardcore,1200);return;
+ }
+ let m=schedule.find(x=>x.id===current.id);m.status='done';
+ let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:current.round,kind:settings.kind,mode:settings.mode};
+ results.unshift(rec);localStorage.setItem('krakenV5Results',JSON.stringify(results));
+ if(settings.kind==='team'){if(w===0)teamTally.blue++;else teamTally.red++;}
+ if(bracket && settings.mode==='champion' && settings.kind==='single')updateBracketAfterMatch(current.teams[w][0],current.teams[1-w][0]);
+ $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${current.teams[w].join(' + ')}</h2><p>Sety: ${current.sets.join(' : ')}</p>${settings.kind==='team'?`<p>Wynik drużyn: 🔵 ${teamTally.blue} : ${teamTally.red} 🔴</p>`:''}<button class="btn" onclick="continueAfterMatch()">DALEJ</button></div>`;
+ $('nextBox').innerHTML=upcoming()[0]?`<div class="small">NASTĘPNY W KOLEJCE</div><strong>${matchLabel(upcoming()[0])}</strong>`:'<strong>Wszystkie dostępne mecze zakończone.</strong>';
+ renderSchedule();renderStats();renderBracket();renderTeamTally();$('modeSummary').textContent=settings.mode==='champion'?'Turniej pucharowy — klasyfikacja i miejsca są aktualizowane po meczach.':settings.mode==='equal'?'Tryb równej gry — podsumowanie liczby spotkań i zwycięstw.':'Wyniki trybu drużynowego.';
+ if(settings.autoNext==='auto')setTimeout(continueAfterMatch,1200);
+}
+
+function continueHardcore(){
+ if(!hardcore)return;
+ let previousKing=hardcore.king;
+ if(hardcore.queue.length===0)hardcore.queue=players.filter(n=>n!==hardcore.king);
+ launchHardcoreMatch();renderHardcoreClassification();
+}
+function renderHardcoreClassification(){
+ if(!hardcore)return;
+ let rows=Object.entries(hardcore.points).sort((a,b)=>b[1]-a[1]);
+ $('nextBox').innerHTML=`<div class="hardcore-current"><b>🔥 Hardcore — aktualny mistrz kortu: ${hardcore.king}</b><div class="small">Seria zwycięstw: ${hardcore.streak} · następny rywal: ${hardcore.queue[0]||'—'}</div></div>`+
+ `<div class="small"><b>Klasyfikacja punktowa</b></div>`+rows.map((x,i)=>`<div class="item"><b>${i===0?'🏆 ':''}${i+1}. ${x[0]}</b><span>${x[1]} pkt · ${hardcore.wins[x[0]]} wygranych</span></div>`).join('');
+ $('modeSummary').innerHTML=rows.map((x,i)=>`<div class="item"><b>${i+1}. ${x[0]}</b><span>${x[1]} pkt</span></div>`).join('');
+}
+function continueAfterMatch(){if(settings.mode==='equal'&&schedule.some(m=>m.status==='pending')){startNext()}else if(settings.mode==='champion'&&schedule.some(m=>m.status==='pending')){startNext()}else{$('matchMeta').textContent='Wszystkie zaplanowane mecze zakończone.';$('scoreboard').innerHTML='<div class="card" style="grid-column:1/-1;text-align:center"><h2>Rozgrywki zakończone</h2><button class="btn" onclick="newEvent()">NOWE ROZGRYWKI</button></div>';$('nextBox').innerHTML='';current=null}renderSchedule()}
+function undo(){if(!history.length||!current)return;current=JSON.parse(history.pop());renderLive()}
+function finish(){if(!current||current.done)return;if(confirm('Zapisać mecz na podstawie aktualnego wyniku?')){let w=current.sets[0]===current.sets[1]?(current.points[0]>=current.points[1]?0:1):(current.sets[0]>current.sets[1]?0:1);complete(w)}}
+function togglePause(){isPaused=!isPaused;$('pause').textContent=isPaused?'Wznów mecz':'Pauza';renderLive()}
+function newEvent(){current=null;schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};$('live').classList.add('hidden');$('setup').classList.remove('hidden');}
+function renderSchedule(){
+ renderBracket();if(settings&&settings.mode==='hardcore'){renderHardcoreClassification();$('scheduleSummary').textContent=`Hardcore · rozegrane mecze: ${hardcore?hardcore.played:0} · zwycięzca kortu: ${hardcore?hardcore.king:'—'}`;$('scheduleList').innerHTML='';return;}
+ $('scheduleSummary').textContent=schedule.length?`Zaplanowano ${schedule.length} spotkań · rozegrane: ${schedule.filter(m=>m.status==='done').length} · oczekujące: ${schedule.filter(m=>m.status==='pending').length} · korty: ${settings.courts||1}`:'Nie utworzono jeszcze harmonogramu.';
+ let next=upcoming()[0];$('upNext').classList.toggle('hidden',!next);$('upNext').innerHTML=next?`<div class="small">NAJBLIŻSZY MECZ</div><strong>${matchLabel(next)}</strong><div class="small">Runda ${next.round} · kort ${next.court}</div>`:'';
+ $('scheduleList').innerHTML=schedule.map((m,i)=>`<div class="schedule ${m.status==='playing'?'current':''} ${m.status==='done'?'done':''}"><span>${i+1}.</span><span>R${m.round} · K${m.court}: ${matchLabel(m)}${m.teams.flat().some(n=>paused.has(n))?' <span class="warning">(pauza gracza)</span>':''}</span><span><span class="pill">${m.status==='done'?'ZAGRANY':m.status==='playing'?'TERAZ':'OCZEKUJE'}</span> ${m.status==='pending'?`<button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},-1)">↑</button><button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},1)">↓</button>`:''}</span></div>`).join('');
+}
+function moveMatch(i,d){let j=i+d;if(j<0||j>=schedule.length||schedule[i].status!=='pending'||schedule[j].status!=='pending')return;[schedule[i],schedule[j]]=[schedule[j],schedule[i]];renderSchedule()}
+function renderMatches(){$('matchList').innerHTML=results.length?results.map(m=>`<div class="item"><div><b>${m.teams.map(t=>t.join(' + ')).join(' vs ')}</b><div class="small">${m.date} · runda ${m.round}</div></div><div><b>${m.sets.join(' : ')}</b><div class="small">Wygrał: ${m.teams[m.winner].join(' + ')}</div></div></div>`).join(''):'Brak rozegranych meczów.'}
+function renderStats(){
+ let stats={};results.forEach(m=>m.teams.forEach((team,i)=>team.forEach(n=>{stats[n]??={w:0,l:0,setsW:0,setsL:0,elo:1000};if(i===m.winner)stats[n].w++;else stats[n].l++;stats[n].setsW+=m.sets[i]||0;stats[n].setsL+=m.sets[1-i]||0})));
+ // Elo update over match records, simple team-average expected score.
+ let elo={};results.slice().reverse().forEach(m=>{let A=m.teams[0],B=m.teams[1];A.forEach(n=>elo[n]??=1000);B.forEach(n=>elo[n]??=1000);let ra=A.reduce((s,n)=>s+elo[n],0)/A.length,rb=B.reduce((s,n)=>s+elo[n],0)/B.length,expected=1/(1+Math.pow(10,(rb-ra)/400)),actual=m.winner===0?1:0,delta=24*(actual-expected);A.forEach(n=>elo[n]+=delta/A.length);B.forEach(n=>elo[n]-=delta/B.length)});
+ let list=Object.keys(stats);$('statsGrid').innerHTML=[['Mecze',results.length],['Zawodnicy',list.length],['Zwycięstwa',results.length],['Średnie ELO',list.length?Math.round(list.reduce((s,n)=>s+(elo[n]||1000),0)/list.length):0]].map(x=>`<div class="stat"><strong>${x[1]}</strong><span class="small">${x[0]}</span></div>`).join('');
+ $('ranking').innerHTML=list.length?list.sort((a,b)=>(elo[b]||1000)-(elo[a]||1000)).map((n,i)=>`<div class="item"><b>${i+1}. ${n}</b><span>${Math.round(elo[n]||1000)} ELO · ${stats[n].w}W / ${stats[n].l}L</span></div>`).join(''):'Brak wyników. Ranking ELO pojawi się po pierwszych meczach.';
+}
+function renderAdmin(){
+ $('adminPlayers').innerHTML=players.map((n,i)=>`<span class="playerchip">${n}<button onclick="removePlayer(${i})">×</button></span>`).join('')||'<span class="small">Brak zawodników.</span>';
+ $('pausePlayers').innerHTML=players.map(n=>`<div class="item"><span>${n}</span><button class="btn ${paused.has(n)?'gold':'secondary'}" onclick="togglePlayerPause('${n.replace(/'/g,"\\'")}')">${paused.has(n)?'Wznów':'Wstrzymaj udział'}</button></div>`).join('');
+}
+function removePlayer(i){if(schedule.length){$('adminMsg').textContent='Zmiana składu po wygenerowaniu harmonogramu wymaga ponownego przeliczenia.';return}players.splice(i,1);renderAdmin()}
+function togglePlayerPause(n){paused.has(n)?paused.delete(n):paused.add(n);renderAdmin();renderSchedule();if(current&&current.teams.flat().includes(n))$('liveMsg').textContent='Uwaga: zawodnik ma ustawioną pauzę. Bieżący mecz nie został automatycznie przerwany.'}
+function addPlayer(){let n=$('addPlayerName').value.trim();if(!n)return;if(players.length>=4){$('adminMsg').textContent='W wersji demo maksymalnie 4 zawodników.';return}if(players.includes(n)){ $('adminMsg').textContent='Ten zawodnik już jest na liście.';return}players.push(n);$('addPlayerName').value='';renderAdmin();$('adminMsg').textContent='Dodano zawodnika do listy. Aby uwzględnić go w harmonogramie, przelicz rozgrywki.'}
+function exportCSV(){let rows=[['Data','Zawodnicy/Drużyny','Wynik setów','Zwycięzca','Runda'],...results.map(m=>[m.date,m.teams.map(t=>t.join(' + ')).join(' vs '),m.sets.join(':'),m.teams[m.winner].join(' + '),m.round])];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='kraken-wyniki.csv';a.click();URL.revokeObjectURL(a.href)}
+function shufflePending(){let idx=schedule.map((m,i)=>m.status==='pending'?i:-1).filter(i=>i>=0),vals=idx.map(i=>schedule[i]).sort(()=>Math.random()-.5);idx.forEach((i,k)=>schedule[i]=vals[k]);renderSchedule()}
+function rebuild(){if(!confirm('Wygenerować kolejkę od nowa? Zagrane mecze zostaną zachowane, oczekujące zostaną zastąpione.'))return;let done=schedule.filter(m=>m.status==='done'),built=generate().ordered.filter(m=>!done.some(d=>matchLabel(d)===matchLabel(m)));schedule=[...done,...built];renderSchedule()}
+function toggleTV(on){document.body.classList.toggle('tvMode',on);$('tvExit').classList.toggle('hidden',!on);if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
+$('create').onclick=create;setCompetitionType('individual');$('undo').onclick=undo;$('finish').onclick=finish;$('pause').onclick=togglePause;$('endSession').onclick=newEvent;$('nextBtn').onclick=()=>{if(current&&!current.done){if(!confirm('Pominąć bieżący mecz?'))return;let m=schedule.find(x=>x.id===current.id);if(m)m.status='skipped'}if(settings&&settings.mode==='hardcore'){continueHardcore()}else startNext()};$('tvBtn').onclick=()=>toggleTV(true);
+$('addPlayer').onclick=addPlayer;$('export').onclick=exportCSV;$('shufflePending').onclick=shufflePending;$('rebuild').onclick=rebuild;
+$('copyLink').onclick=()=>{navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link (w wersji online będzie prowadził do podglądu).').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
+$('clear').onclick=()=>{if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();$('adminMsg').textContent='Wyczyszczono lokalną historię.'}};
+$('eventName').onchange=()=>{if(settings)settings.eventName=$('eventName').value;$('eventTitle').textContent=$('eventName').value};
+</script></body></html>
