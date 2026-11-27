@@ -141,7 +141,7 @@ function safeLoadJson(key,fallback){
 let players=[],registeredPlayers=safeLoadJson('krakenRegisteredPlayers',[]),schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=safeLoadJson('krakenV5Results',[]),paused=new Set(),settings={},isPaused=false;
 if(!Array.isArray(registeredPlayers))registeredPlayers=[];
 if(!Array.isArray(results))results=[];
-let playerColors={};
+let playerColors=safeLoadJson('krakenPlayerColors',{}); if(!playerColors||typeof playerColors!=='object'||Array.isArray(playerColors))playerColors={};
 const DEFAULT_PLAYER_COLORS=['#278BFF','#FF4D5A','#B45CFF','#19B99A'];
 const uid=()=>Math.random().toString(36).slice(2,9);
 const FIREBASE_CONFIG = {
@@ -382,19 +382,21 @@ function escapeHtml(value){
  return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
 function ensurePlayerColors(){
- players.forEach((name,index)=>{
+ registeredPlayers.forEach((name,index)=>{
    if(!/^#[0-9a-fA-F]{6}$/.test(playerColors[name]||'')){
      playerColors[name]=DEFAULT_PLAYER_COLORS[index%DEFAULT_PLAYER_COLORS.length];
    }
  });
+ localStorage.setItem('krakenPlayerColors',JSON.stringify(playerColors));
 }
 function getPlayerColor(name,index=0){
  const color=playerColors[name];
  return /^#[0-9a-fA-F]{6}$/.test(color||'')?color:DEFAULT_PLAYER_COLORS[index%DEFAULT_PLAYER_COLORS.length];
 }
-function setPlayerColor(index,color){
- if(!isAdmin||!players[index]||!/^#[0-9a-fA-F]{6}$/.test(color))return;
- playerColors[players[index]]=color;
+function setPlayerColor(name,color){
+ if(!isAdmin||!registeredPlayers.includes(name)||!/^#[0-9a-fA-F]{6}$/.test(color))return;
+ playerColors[name]=color;
+ localStorage.setItem('krakenPlayerColors',JSON.stringify(playerColors));
  renderAdmin();
  if(current)renderLive();
  queueCloudSave();
@@ -529,10 +531,10 @@ function renderAdmin(){
  queueCloudSave();ensurePlayerColors();
  $('adminPlayers').innerHTML=registeredPlayers.map((n,i)=>`<span class="playerchip">${escapeHtml(n)}<button type="button" data-remove-player="${i}" aria-label="Usuń ${escapeHtml(n)}">×</button></span>`).join('')||'<span class="small">Brak zawodników.</span>';
  renderRosterPicker();
- $('playerColorSettings').innerHTML=players.map((n,i)=>`<div class="color-row"><span class="player-color-name">${escapeHtml(n)}</span><input aria-label="Kolor zawodnika ${escapeHtml(n)}" type="color" value="${getPlayerColor(n,i)}" data-player-color="${i}" ${isAdmin?'':'disabled'}></div>`).join('')||'<span class="small">Dodaj zawodników, aby przypisać im kolory.</span>';
+ $('playerColorSettings').innerHTML=registeredPlayers.map((n,i)=>`<div class="color-row"><span class="player-color-name">${escapeHtml(n)}</span><input aria-label="Kolor zawodnika ${escapeHtml(n)}" type="color" value="${getPlayerColor(n,i)}" data-player-color="${escapeHtml(n)}" ${isAdmin?'':'disabled'}></div>`).join('')||'<span class="small">Dodaj zawodników, aby przypisać im kolory.</span>'; 
  $('pausePlayers').innerHTML=players.map(n=>`<div class="item"><span>${escapeHtml(n)}</span><button type="button" class="btn ${paused.has(n)?'gold':'secondary'}" data-pause-player="${escapeHtml(n)}">${paused.has(n)?'Wznów':'Wstrzymaj udział'}</button></div>`).join('');
  $('adminPlayers').querySelectorAll('[data-remove-player]').forEach(b=>b.addEventListener('click',()=>removePlayer(Number(b.dataset.removePlayer))));
- $('playerColorSettings').querySelectorAll('[data-player-color]').forEach(el=>el.addEventListener('change',()=>setPlayerColor(Number(el.dataset.playerColor),el.value)));
+ $('playerColorSettings').querySelectorAll('[data-player-color]').forEach(el=>el.addEventListener('change',()=>setPlayerColor(el.dataset.playerColor,el.value)));
  $('pausePlayers').querySelectorAll('[data-pause-player]').forEach(b=>b.addEventListener('click',()=>togglePlayerPause(b.dataset.pausePlayer)));
 }
 function removePlayer(i){
@@ -562,6 +564,7 @@ function addPlayer(){
  if(registeredPlayers.some(x=>x.toLocaleLowerCase('pl-PL')===n.toLocaleLowerCase('pl-PL'))){$('adminMsg').textContent='Zawodnik o takiej nazwie już istnieje.';return;}
  registeredPlayers.push(n);localStorage.setItem('krakenRegisteredPlayers',JSON.stringify(registeredPlayers));
  playerColors[n]=DEFAULT_PLAYER_COLORS[(registeredPlayers.length-1)%DEFAULT_PLAYER_COLORS.length];
+ localStorage.setItem('krakenPlayerColors',JSON.stringify(playerColors));
  $('addPlayerName').value='';renderAdmin();queueCloudSave();
  $('adminMsg').textContent='Dodano zawodnika do listy. Możesz go teraz wybrać przy tworzeniu rozgrywek.';
 }
@@ -634,7 +637,7 @@ function applyCloudState(data){
     players=Array.isArray(data.players)?data.players:[];
     registeredPlayers=Array.isArray(data.registeredPlayers)?data.registeredPlayers.filter(x=>typeof x==='string'&&x.trim()):players.slice();
     localStorage.setItem('krakenRegisteredPlayers',JSON.stringify(registeredPlayers));
-    playerColors=data.playerColors&&typeof data.playerColors==='object'?data.playerColors:{};
+    playerColors=data.playerColors&&typeof data.playerColors==='object'?data.playerColors:safeLoadJson('krakenPlayerColors',{});
     ensurePlayerColors();
     schedule=Array.isArray(data.schedule)?data.schedule:[];
     current=data.current||null;

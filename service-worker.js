@@ -1,4 +1,4 @@
-const CACHE_NAME = "kraken-squash-shell-v4-v11-audit";
+const CACHE_NAME = "kraken-squash-shell-v5-v11-colors-fix";
 const SHELL = [
   "./",
   "./index.html",
