@@ -1,8 +1,9 @@
-const CACHE_NAME = "kraken-squash-shell-v2-colors-scroll-lock";
+const CACHE_NAME = "kraken-squash-shell-v4-v11-audit";
 const SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./service-worker.js",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"

@@ -76,11 +76,11 @@ html.tvMode body{
 <input type="hidden" id="competitionType" value="individual">
 <div class="row"><div><label>2. Wybierz tryb gry</label><select id="mode"><option value="champion">Turniejowy — drabinka pucharowa</option><option value="equal">Równa gra — każdy tyle samo gier</option><option value="hardcore">Hardcore — zwycięzca zostaje</option></select></div><div><label>Format meczu</label><select id="kind"><option value="single">Single — 1 vs 1</option><option value="doubles">Debel — 2 vs 2</option><option value="team">Pojedynki 1 vs 1 dla drużyn</option></select></div></div>
 <div id="modeDescription" class="callout small">Turniej pucharowy: przegrany odpada, zwycięzcy przechodzą do kolejnej rundy. Na końcu podium i klasyfikacja.</div>
-<label>Uczestnicy (2–4 osoby)</label><div class="grid2"><input id="p1" value="Adam" placeholder="Gracz 1"><input id="p2" value="Bartek" placeholder="Gracz 2"><input id="p3" value="Tomek" placeholder="Gracz 3"><input id="p4" value="Michał" placeholder="Gracz 4"></div>
+<label>Uczestnicy (wybierz 2–4 osoby z listy administratora)</label><div id="rosterPicker" class="grid2"><span class="small">Najpierw dodaj zawodników w Panelu admina.</span></div>
 <div class="callout small">Możesz usunąć puste pola. Debel wymaga 4 osób. Tryb drużynowy dzieli 4 graczy na zespoły A i B (pierwszych dwóch i kolejnych dwóch).</div>
 <div class="card" style="background:#111812">
 <h3 class="section-title">Generator harmonogramu</h3>
-<div class="row"><div><label>Liczba rund</label><select id="rounds"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option><option value="20">20</option><option value="infinite">∞ Bez końca</option><option value="custom">Własna liczba</option></select></div><div id="customWrap" class="hidden"><label>Własne rundy</label><input id="customRounds" type="number" min="1" max="500" value="12"></div><div><label>Liczba kortów</label><select id="courts"><option>1</option><option>2</option></select></div></div>
+<div class="row"><div><label>Liczba rund</label><select id="rounds"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option><option value="20">20</option><option value="infinite">∞ Bez końca</option><option value="custom">Własna liczba</option></select></div><div id="customWrap" class="hidden"><label>Własne rundy</label><input id="customRounds" type="number" min="1" max="500" value="12"></div><div><label>Liczba kortów (obecnie obsługiwany 1)</label><select id="courts"><option value="1">1 kort</option></select></div></div>
 <div class="row"><div><label>Szacowany czas meczu</label><select id="matchMins"><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div><div><label>Minimalny odpoczynek (min)</label><select id="restMins"><option>0</option><option>10</option><option selected>15</option><option>20</option><option>30</option></select></div><div><label>Układanie kolejki</label><select id="algorithm"><option value="balanced">Inteligentne — wyrównuj przerwy i pary</option><option value="random">Losowa kolejność</option></select></div></div>
 <div class="row"><div><label>Powtarzanie przeciwników</label><select id="repeatOpp"><option value="min">Unikaj powtórek, jeśli możliwe</option><option value="allow">Dozwolone</option></select></div><div><label>Automatyczne następne spotkanie</label><select id="autoNext"><option value="manual">Ręczne uruchomienie</option><option value="auto">Automatycznie po zapisaniu</option></select></div></div>
 <p class="small">Generator bierze pod uwagę liczbę kortów, długość meczu, minimalny odpoczynek, równą liczbę występów i unikanie powtórek. Dla 2 kortów harmonogram może zawierać równoległe mecze.</p>
@@ -113,7 +113,7 @@ html.tvMode body{
 </div>
 <div id="adminControls" class="hidden">
 <div class="card"><h2 class="section-title">Panel administratora</h2><div class="row"><div><label>Nazwa wydarzenia</label><input id="eventName" value="Kraken Squash Night"></div><div><label>Kod rozgrywek</label><input id="eventCode" readonly value="KRAKEN-DEMO"></div></div>
-<h3 class="section-title" style="margin-top:18px">Zawodnicy</h3><div id="adminPlayers"></div><div class="row"><input id="addPlayerName" placeholder="Imię nowego gracza"><button class="btn secondary" id="addPlayer">+ Dodaj zawodnika</button></div>
+<h3 class="section-title" style="margin-top:18px">Zawodnicy</h3><div id="adminPlayers"></div><div class="row"><input id="addPlayerName" placeholder="Imię nowego gracza"><button type="button" class="btn secondary" id="addPlayer">+ Dodaj zawodnika</button></div>
 <h3 class="section-title" style="margin-top:18px">Kolory zawodników</h3>
 <p class="small">Wybierz kolor każdego zawodnika. Pola punktacji na głównej tablicy przyjmą przypisane kolory. W deblu kolor pola będzie połączeniem kolorów obu zawodników.</p>
 <div id="playerColorSettings" class="color-settings"><span class="small">Kolory pojawią się po utworzeniu rozgrywki.</span></div>
@@ -126,16 +126,21 @@ html.tvMode body{
   </div>
   <div class="small" style="margin-top:9px">Zeskanuj aparatem telefonu. Otworzy się publiczny podgląd wyników tej rozgrywki.</div>
 </div>
-<div class="row" style="margin-top:15px"><button class="btn secondary" id="export">Eksportuj wyniki CSV</button><button class="btn danger" id="clear">Usuń lokalne dane demo</button></div><div id="adminMsg" class="toast"></div>
+<div class="row" style="margin-top:15px"><button class="btn secondary" id="export">Eksportuj wyniki CSV</button><button class="btn danger" id="clear">Wyczyść historię wyników</button></div><div id="adminMsg" class="toast"></div>
 </div>
 </div>
 </section>
-<div class="footer">Kraken Squash LiveScore · V6 · Firebase</div>
+<div class="footer">Kraken Squash LiveScore · V11 · Firebase</div>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
-let players=[],schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=JSON.parse(localStorage.getItem('krakenV5Results')||'[]'),paused=new Set(),settings={},isPaused=false;
+function safeLoadJson(key,fallback){
+ try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(err){console.warn('Nie można odczytać lokalnych danych:',key,err);return fallback;}
+}
+let players=[],registeredPlayers=safeLoadJson('krakenRegisteredPlayers',[]),schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=safeLoadJson('krakenV5Results',[]),paused=new Set(),settings={},isPaused=false;
+if(!Array.isArray(registeredPlayers))registeredPlayers=[];
+if(!Array.isArray(results))results=[];
 let playerColors={};
 const DEFAULT_PLAYER_COLORS=['#278BFF','#FF4D5A','#B45CFF','#19B99A'];
 const uid=()=>Math.random().toString(36).slice(2,9);
@@ -155,7 +160,17 @@ let eventId=null, cloudReady=false, cloudSaveTimer=null, applyingCloudState=fals
 function tab(id){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));if(id==='schedule')renderSchedule();if(id==='matches')renderMatches();if(id==='stats')renderStats();if(id==='admin')renderAdmin()}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 $('rounds').onchange=()=> $('customWrap').classList.toggle('hidden',$('rounds').value!=='custom');
-function namesFromInputs(){return ['p1','p2','p3','p4'].map(id=>$(id).value.trim()).filter(Boolean)}
+function namesFromInputs(){
+ return [...document.querySelectorAll('#rosterPicker input[type="checkbox"]:checked')].map(el=>el.value);
+}
+function renderRosterPicker(){
+ const box=$('rosterPicker');if(!box)return;
+ const oldSelected=new Set([...box.querySelectorAll('input[type="checkbox"]:checked')].map(el=>el.value));
+ const selected=players.length&&schedule.length?new Set(players):oldSelected;
+ box.innerHTML=registeredPlayers.length
+  ? registeredPlayers.map(name=>`<label class="color-row" style="margin:0;cursor:pointer"><span>${escapeHtml(name)}</span><input type="checkbox" value="${escapeHtml(name)}" style="width:20px;min-width:20px" ${selected.has(name)?'checked':''}></label>`).join('')
+  : '<span class="small">Brak zawodników. Dodaj ich w Panelu admina.</span>';
+}
 function combos(a){let out=[];for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++)out.push([a[i],a[j]]);return out}
 function teamDoubles(a){let out=[];for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){let rest=a.filter((_,k)=>k!==i&&k!==j);out.push([[a[i],a[j]],rest])}return out}
 function scoreSchedule(candidates,placed,restMs,seen){
@@ -168,25 +183,48 @@ function scoreSchedule(candidates,placed,restMs,seen){
 }
 function buildCandidatePool(){
  let pool=[];
- if(settings.kind==='single'){combos(players).forEach(t=>pool.push({teams:[[t[0]],[t[1]]]}))}
- else if(settings.kind==='doubles'){teamDoubles(players).forEach(t=>pool.push({teams:t}))}
- else {pool.push({teams:[[players[0]],[players[2]]],teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],teamNames:['Niebiescy','Czerwoni']});}
+ if(settings.competitionType==='team' && settings.kind==='doubles'){
+  pool.push({teams:[[players[0],players[1]],[players[2],players[3]]],teamNames:['Niebiescy','Czerwoni']});
+ }else if(settings.kind==='single'){
+  combos(players).forEach(t=>pool.push({teams:[[t[0]],[t[1]]]}));
+ }else if(settings.kind==='doubles'){
+  teamDoubles(players).forEach(t=>pool.push({teams:t}));
+ }else{
+  pool.push(
+   {teams:[[players[0]],[players[2]]],teamNames:['Niebiescy','Czerwoni']},
+   {teams:[[players[1]],[players[3]]],teamNames:['Niebiescy','Czerwoni']}
+  );
+ }
  return pool;
 }
 function generate(){
  let rounds=$('rounds').value==='infinite'?Infinity:$('rounds').value==='custom'?Math.max(1,Math.min(500,+$('customRounds').value||1)):+$('rounds').value;
- let pool=buildCandidatePool(),ordered=[],seen=new Set(),lastRound=0;
+ if(settings.mode==='team_cup')rounds=1;
+ let pool=buildCandidatePool(),ordered=[],seen=new Set();
  let finite=Number.isFinite(rounds)?rounds:1;
  for(let r=1;r<=finite;r++){
-  let roundPool=pool.slice();
-  if(settings.algorithm==='random')roundPool.sort(()=>Math.random()-.5);
-  else {
-   let temp=[],remaining=roundPool.slice();
-   while(remaining.length){remaining.sort((a,b)=>scoreSchedule(a,ordered,settings.restMins,seen)-scoreSchedule(b,ordered,settings.restMins,seen));let chosen=remaining.shift();temp.push(chosen);let pair=chosen.teams.map(t=>t.slice().sort().join('+')).sort().join('|');seen.add(pair)}
-   roundPool=temp;
+  let remaining=pool.slice(),slot=1;
+  while(remaining.length){
+   let candidates=remaining.slice();
+   if(settings.algorithm==='random')candidates.sort(()=>Math.random()-.5);
+   else candidates.sort((a,b)=>scoreSchedule(a,ordered,settings.restMins,seen)-scoreSchedule(b,ordered,settings.restMins,seen));
+   let selected=[],used=new Set();
+   for(const candidate of candidates){
+    const members=candidate.teams.flat();
+    if(selected.length>=settings.courts)break;
+    if(members.every(name=>!used.has(name))){
+     selected.push(candidate);members.forEach(name=>used.add(name));
+    }
+   }
+   // A doubles match uses all four players, so it naturally occupies its own slot.
+   if(!selected.length)selected.push(remaining[0]);
+   selected.forEach((m,index)=>{
+    ordered.push({...m,id:uid(),round:r,slot,court:index+1,status:'pending'});
+    const pair=m.teams.map(t=>t.slice().sort().join('+')).sort().join('|');seen.add(pair);
+    const ix=remaining.indexOf(m);if(ix>=0)remaining.splice(ix,1);
+   });
+   slot++;
   }
-  // With two courts, schedule pairs into a time slot; otherwise sequential.
-  roundPool.forEach((m,i)=>ordered.push({...m,id:uid(),round:r,slot:Math.floor(i/settings.courts)+1,court:(i%settings.courts)+1,status:'pending'}));
  }
  return {rounds,ordered,pool};
 }
@@ -205,40 +243,41 @@ function advanceByes(){
 }
 function updateBracketAfterMatch(winnerName,loserName){
  if(!bracket||settings.mode!=='champion'||settings.kind!=='single')return;
- let match=schedule.find(m=>m.id===current.id);
+ const match=schedule.find(m=>m.id===current.id);
  if(!match)return;
  match.winnerName=winnerName;match.loserName=loserName;
- bracket.placements.push({name:loserName,place:bracket.placements.length+2});
- let roundIndex=match.bracketRound||0;
- let roundMatches=schedule.filter(m=>m.bracketRound===roundIndex);
+ const roundIndex=match.bracketRound||0;
+ const roundMatches=schedule.filter(m=>m.bracketRound===roundIndex);
+ if(roundIndex===0 && players.length>=3){
+  bracket.placements.push({name:loserName,place:players.length===3?3:null});
+ }
  if(roundMatches.every(m=>m.status==='done')){
-   if(players.length===2){bracket.champion=winnerName;bracket.runnerUp=loserName;}
-   else if(players.length===3){
-     if(roundIndex===0){
-       let finalist=roundMatches[0].winnerName;
-       let final={teams:[[bracket.byePlayer],[finalist]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'};
-       schedule.push(final);
-     } else {bracket.champion=winnerName;bracket.runnerUp=loserName;}
-   } else if(players.length===4 && roundIndex===0){
-     let winners=roundMatches.map(m=>m.winnerName);
-     schedule.push({teams:[[winners[0]],[winners[1]]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'});
-   } else {bracket.champion=winnerName;bracket.runnerUp=loserName;}
+  if(players.length===2){bracket.champion=winnerName;bracket.runnerUp=loserName;}
+  else if(players.length===3){
+   if(roundIndex===0){
+    const finalist=roundMatches[0].winnerName;
+    schedule.push({teams:[[bracket.byePlayer],[finalist]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'});
+   }else{bracket.champion=winnerName;bracket.runnerUp=loserName;}
+  }else if(players.length===4 && roundIndex===0){
+   const winners=roundMatches.map(m=>m.winnerName);
+   schedule.push({teams:[[winners[0]],[winners[1]]],id:uid(),round:2,slot:1,court:1,status:'pending',bracketRound:1,bracketIndex:0,label:'Finał'});
+  }else{bracket.champion=winnerName;bracket.runnerUp=loserName;}
  }
 }
 function renderBracket(){
- let el=$('bracketView'),cl=$('classification');
- if(!bracket){el.textContent='Drabinka turniejowa jest dostępna w trybie Champion (Single).';cl.textContent='Klasyfikacja pojawi się po pierwszych meczach.';return}
- let rounds=[...new Set(schedule.filter(m=>m.bracketRound!==undefined).map(m=>m.bracketRound))].sort((a,b)=>a-b);
- el.innerHTML=rounds.map(r=>`<div class="bracket-round"><b>${r===0?(players.length===2?'Finał':'Półfinały'):'Finał'}</b>${schedule.filter(m=>m.bracketRound===r).map(m=>`<div class="bracket-match ${m.status==='done'?'won':''}">${m.teams[0][0]} <b>vs</b> ${m.teams[1][0]}<br><span class="small">${m.status==='done'?'Zwycięzca: '+(m.winnerName||'—'):'Oczekuje na rozegranie'}</span></div>`).join('')}</div>`).join('');
+ const el=$('bracketView'),cl=$('classification');
+ if(!bracket){el.textContent='Drabinka turniejowa jest dostępna w trybie Champion (Single).';cl.textContent='Klasyfikacja pojawi się po pierwszych meczach.';return;}
+ const rounds=[...new Set(schedule.filter(m=>m.bracketRound!==undefined).map(m=>m.bracketRound))].sort((a,b)=>a-b);
+ el.innerHTML=rounds.map(r=>`<div class="bracket-round"><b>${r===0?(players.length===2?'Finał':'Półfinały'):'Finał'}</b>${schedule.filter(m=>m.bracketRound===r).map(m=>`<div class="bracket-match ${m.status==='done'?'won':''}">${escapeHtml(m.teams[0][0])} <b>vs</b> ${escapeHtml(m.teams[1][0])}<br><span class="small">${m.status==='done'?'Zwycięzca: '+escapeHtml(m.winnerName||'—'):'Oczekuje na rozegranie'}</span></div>`).join('')}</div>`).join('');
  let rows=[];
  if(bracket.champion)rows.push(['🏆',bracket.champion,'Mistrz turnieju']);
  if(bracket.runnerUp)rows.push(['🥈',bracket.runnerUp,'Drugie miejsce']);
- bracket.placements.forEach((x,i)=>rows.push([players.length===3?'🥉':'🎖️',x.name,players.length===3?'Trzecie miejsce':'Odpadł w półfinale']));
+ bracket.placements.forEach(x=>rows.push([players.length===3?'🥉':'🎖️',x.name,players.length===3?'Trzecie miejsce':'Odpadł w półfinale · miejsca 3–4']));
  if(!rows.length)cl.textContent='Klasyfikacja zostanie uzupełniona po zakończeniu kolejnych meczów.';
- else cl.innerHTML=rows.map(r=>`<div class="item"><b style="font-size:20px">${r[0]} ${r[1]}</b><span>${r[2]}</span></div>`).join('');
+ else cl.innerHTML=rows.map(r=>`<div class="item"><b style="font-size:20px">${r[0]} ${escapeHtml(r[1])}</b><span>${escapeHtml(r[2])}</span></div>`).join('');
 }
 function renderTeamTally(){
- if(settings.kind!=='team')return;
+ if(settings.competitionType!=='team')return;
  $('nextBox').insertAdjacentHTML('beforeend',`<div class="small" style="margin-top:8px">WYNIK DRUŻYN · 🔵 Niebiescy ${teamTally.blue} : ${teamTally.red} 🔴 Czerwoni</div>`);
 }
 
@@ -262,10 +301,11 @@ function updateModeDescription(){
  if(t==='individual'&&m==='champion')text='Turniej pucharowy: przegrany odpada, zwycięzcy przechodzą dalej. Na końcu klasyfikacja z pucharami.';
  else if(t==='individual'&&m==='equal')text='Generator układa kolejkę tak, aby każdy rozegrał tyle samo meczów, z możliwie równymi przerwami.';
  else if(t==='individual'&&m==='hardcore')text='Hardcore: zwycięzca zostaje na korcie, przegrany schodzi i wraca na koniec kolejki. Za kolejne wygrane z rzędu zdobywasz kolejno 1, 2, 3… punktów. Minimum 3 graczy.';
- else if(m==='team_league')text='Liga drużynowa: dwie ekipy po dwóch graczy. Rozgrywane są pojedynki 1 vs 1, a każde zwycięstwo daje punkt drużynie.';
- else text='Puchar drużynowy: dwie drużyny rywalizują w pojedynkach 1 vs 1. Wynik drużynowy decyduje o awansie.';
+ else if(m==='team_league')text=t==='team'&&$('kind').value==='doubles'?'Liga drużynowa: dwie stałe pary grają debla w każdej rundzie.':'Liga drużynowa: dwie ekipy po dwóch graczy. Każda runda zawiera dwa single; każde zwycięstwo daje punkt drużynie.';
+ else text=$('kind').value==='doubles'?'Puchar drużynowy: jeden mecz deblowy decyduje o wyniku.':'Puchar drużynowy: dwa single; przy wyniku 1:1 rozgrywany jest decydujący debel.';
  $('modeDescription').textContent=text;
- $('kind').parentElement.classList.toggle('hidden',t==='team');
+ $('kind').parentElement.classList.remove('hidden');
+ $('kind').previousElementSibling.textContent=t==='team'?'Format drużynowy':'Format meczu';
 }
 $('individualChoice').onclick=()=>setCompetitionType('individual');
 $('teamChoice').onclick=()=>setCompetitionType('team');
@@ -273,22 +313,25 @@ $('mode').onchange=updateModeDescription;
 
 function create(){
  if(!isAdmin){$('setupMsg').textContent='Tylko zalogowany administrator może tworzyć rozgrywki.';return;}
- players=namesFromInputs();ensurePlayerColors();let kind=$('competitionType').value==='team'?'team':$('kind').value;
+ players=namesFromInputs();ensurePlayerColors();let kind=$('kind').value;
+ if(players.some(n=>!registeredPlayers.includes(n))||new Set(players).size!==players.length){$('setupMsg').textContent='Wybierz zawodników z listy administratora. Każdy może wystąpić tylko raz.';return;}
  if(players.length<2||players.length>4){$('setupMsg').textContent='Podaj od 2 do 4 zawodników.';return}
  if(kind==='doubles'&&players.length!==4){$('setupMsg').textContent='Debel wymaga dokładnie 4 zawodników.';return}
+ if($('competitionType').value==='individual'&&$('mode').value==='champion'&&kind==='doubles'){$('setupMsg').textContent='Drabinka Champion jest obecnie dostępna tylko dla rozgrywek Single. Dla debla wybierz tryb Równa gra.';return}
+ if($('competitionType').value==='individual'&&$('mode').value==='hardcore'&&kind!=='single'){$('setupMsg').textContent='Tryb Hardcore jest dostępny tylko dla rozgrywek Single.';return}
  if(kind==='team'&&players.length!==4){$('setupMsg').textContent='Rozgrywki drużynowe wymagają dokładnie 4 zawodników (2 na 2).';return}
  if($('competitionType').value==='individual'&&$('mode').value==='hardcore'&&players.length<3){$('setupMsg').textContent='Hardcore wymaga minimum 3 zawodników: zwycięzca zostaje, przegrany schodzi.';return}
- settings={kind,competitionType:$('competitionType').value,mode:$('mode').value,infinite:$('rounds').value==='infinite',algorithm:$('algorithm').value,restMins:+$('restMins').value,matchMins:+$('matchMins').value,courts:+$('courts').value,repeatOpp:$('repeatOpp').value,autoNext:$('autoNext').value,target:+$('target').value,best:+$('best').value,deuce:$('deuce').value,eventName:$('eventName').value||'Kraken Squash'};
+ settings={kind,competitionType:$('competitionType').value,mode:$('mode').value,infinite:$('rounds').value==='infinite' && $('mode').value!=='team_cup',algorithm:$('algorithm').value,restMins:+$('restMins').value,matchMins:+$('matchMins').value,courts:+$('courts').value,repeatOpp:$('repeatOpp').value,autoNext:$('autoNext').value,target:+$('target').value,best:+$('best').value,deuce:$('deuce').value,eventName:$('eventName').value||'Kraken Squash'};
  let built=generate();schedule=built.ordered;
  bracket=null;hardcore=null;teamTally={blue:0,red:0};
  if(settings.mode==='hardcore'){
    let shuffled=$('algorithm').value==='random'?players.slice().sort(()=>Math.random()-.5):players.slice();
    hardcore={queue:shuffled.slice(2),king:shuffled[0],challenger:shuffled[1],streak:0,points:Object.fromEntries(players.map(n=>[n,0])),wins:Object.fromEntries(players.map(n=>[n,0])),played:0};
    schedule=[];
- } else if(settings.competitionType==='team' && settings.mode==='team_league'){
-   schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
- } else if(settings.competitionType==='team' && settings.mode==='team_cup'){
-   schedule=[{teams:[[players[0]],[players[2]]],id:uid(),round:1,slot:1,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']},{teams:[[players[1]],[players[3]]],id:uid(),round:1,slot:2,court:1,status:'pending',teamNames:['Niebiescy','Czerwoni']}];
+ } else if(settings.competitionType==='team'){
+   // Liga: rozgrywki powtarzają dwa single lub debel w każdej wybranej rundzie.
+   // Puchar: jeden tie; przy remisie dwóch singli dochodzi decydujący debel.
+   schedule=built.ordered;
  } else if(settings.mode==='champion' && settings.kind==='single'){
    bracket=makeBracket(players);
    schedule=bracket.rounds[0].map((m,i)=>({...m,id:uid(),round:1,slot:i+1,court:1,status:m.bye?'done':'pending',bracketRound:0,bracketIndex:i}));
@@ -307,7 +350,7 @@ function create(){
 }
 
 function launchHardcoreMatch(){
- if(!hardcore)return;
+ if(!isAdmin||!hardcore)return;
  if(!hardcore.queue.length){
   // With only the current champion left in rotation, cycle previous challengers back in.
   hardcore.queue=players.filter(n=>n!==hardcore.king);
@@ -322,6 +365,7 @@ function launchHardcoreMatch(){
 function activeMatch(){return schedule.find(m=>m.status==='playing')}
 function nextPending(){return schedule.find(m=>m.status==='pending'&&!m.teams.flat().some(n=>paused.has(n)))}
 function startNext(){
+ if(!isAdmin)return;
  let m=nextPending();
  if(!m && settings.infinite){
   let extra=generate().ordered, maxRound=schedule.reduce((v,x)=>Math.max(v,x.round),0);
@@ -329,10 +373,10 @@ function startNext(){
   schedule.push(...extra);m=nextPending();renderSchedule();
  }
  if(!m){$('liveMsg').textContent='Brak dostępnych spotkań. Wznów pauzujących zawodników albo sprawdź harmonogram.';return}
- m.status='playing';current={id:m.id,teams:m.teams,round:m.round,slot:m.slot,court:m.court,points:[0,0],sets:[0,0],setNo:1,done:false};
+ m.status='playing';current={id:m.id,teams:m.teams,round:m.round,slot:m.slot,court:m.court,points:[0,0],sets:[0,0],setNo:1,done:false,isTeamDecider:!!m.isTeamDecider};
  history=[];isPaused=false;renderLive();
 }
-function matchLabel(m){return m.teams.map(t=>t.join(' + ')).join(' vs ')}
+function matchLabel(m){return m.teams.map(t=>t.map(escapeHtml).join(' + ')).join(' vs ')}
 function upcoming(){return schedule.filter(m=>m.status==='pending'&&!m.teams.flat().some(n=>paused.has(n))).slice(0,3)}
 function escapeHtml(value){
  return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -358,20 +402,23 @@ function setPlayerColor(index,color){
 function renderLive(){
  if(!current)return;
  queueCloudSave();
- $('matchMeta').textContent=settings.mode==='hardcore'?`HARDCORE · Zwycięzca zostaje · seria: ${hardcore.streak} · punkty do tej pory: ${hardcore.points[hardcore.king]}`:`Runda ${current.round} · Slot ${current.slot} · Kort ${current.court} · ${settings.kind==='doubles'?'Debel':settings.kind==='team'?'Drużyny · Niebiescy vs Czerwoni':'Single'}`;
+ const isHardcore=settings.mode==='hardcore';
+ $('matchMeta').textContent=isHardcore?`HARDCORE · Zwycięzca zostaje · seria: ${hardcore?.streak||0} · punkty do tej pory: ${hardcore?.points?.[hardcore?.king]||0}`:`Runda ${current.round} · Slot ${current.slot} · Kort ${current.court} · ${settings.competitionType==='team'?(settings.kind==='doubles'?'Debel drużynowy':'Drużyny · Niebiescy vs Czerwoni'):settings.kind==='doubles'?'Debel':'Single'}`;
  $('setLabel').textContent=`SET ${current.setNo} · SETY ${current.sets.join(' : ')}`;
  $('scoreboard').innerHTML=current.teams.map((team,i)=>{
-   const c1=getPlayerColor(team[0],i*2);
-   const c2=team.length>1?getPlayerColor(team[1],i*2+1):c1;
-   const dual=team.length>1;
-   const style=`--player-color:${c1};--player-color-2:${c2};`;
-   const sideLabel=team.length>1?`DRUŻYNA ${i+1}`:`ZAWODNIK ${i+1}`;
-   return `<${isAdmin?'button':'div'} class="side player-custom ${dual?'dual':''}" style="${style}" ${isAdmin?`onclick="addPoint(${i})"`:''}><div class="teamtag"><span class="player-color-dot" style="background:${c1}"></span>${sideLabel}</div><div class="name">${team.map(escapeHtml).join(' + ')}</div><div class="points">${current.points[i]}</div><div class="small">sety: ${current.sets[i]}</div><div class="small">${isAdmin?'DODAJ PUNKT ＋':'PODGLĄD NA ŻYWO'}</div></${isAdmin?'button':'div'}>`;
+  const c1=getPlayerColor(team[0],i*2),c2=team.length>1?getPlayerColor(team[1],i*2+1):c1;
+  const dual=team.length>1,style=`--player-color:${c1};--player-color-2:${c2};`;
+  const sideLabel=settings.competitionType==='team'?(i===0?'NIEBIESCY':'CZERWONI'):dual?`DRUŻYNA ${i+1}`:`ZAWODNIK ${i+1}`;
+  return `<${isAdmin?'button':'div'} class="side player-custom ${dual?'dual':''}" style="${style}" ${isAdmin?`onclick="addPoint(${i})"`:''}><div class="teamtag"><span class="player-color-dot" style="background:${c1}"></span>${sideLabel}</div><div class="name">${team.map(escapeHtml).join(' + ')}</div><div class="points">${current.points[i]}</div><div class="small">sety: ${current.sets[i]}</div><div class="small">${isAdmin?'DODAJ PUNKT ＋':'PODGLĄD NA ŻYWO'}</div></${isAdmin?'button':'div'}>`;
  }).join('');
- $('undo').disabled=!isAdmin;$('finish').disabled=!isAdmin;$('pause').disabled=!isAdmin;$('endSession').disabled=!isAdmin;$('nextBtn').disabled=!isAdmin;
+ $('undo').disabled=!isAdmin||current.done;$('finish').disabled=!isAdmin||current.done;$('pause').disabled=!isAdmin||current.done;$('endSession').disabled=!isAdmin;$('nextBtn').disabled=!isAdmin;
+ $('pause').textContent=isPaused?'Wznów mecz':'Pauza';
  if(viewerMode){$('setup').classList.add('hidden');$('live').classList.remove('hidden');}
- let next=upcoming()[0];if(settings.mode==='hardcore'){$('nextBox').innerHTML=`<div class="hardcore-current"><div class="small">🔥 HARDCORE — ZWYCIĘZCA ZOSTAJE NA KORCIE</div><b>${hardcore.king}</b> broni kortu · <b>${hardcore.challenger}</b> rzuca wyzwanie.<div class="small">Następny w kolejce: ${hardcore.queue[0]||'kolejka zostanie uzupełniona'}</div></div>`;return}$('nextBox').innerHTML=next?`<div class="small">NASTĘPNY MECZ · RUNDA ${next.round} · KORT ${next.court}</div><strong>${matchLabel(next)}</strong><div class="small">Mecz ${schedule.indexOf(next)+1} z ${schedule.length}${Number.isFinite(+schedule.length)?'':''}</div>`:'<div class="small">Brak dostępnych następnych spotkań. Sprawdź pauzujących zawodników lub zakończ rundy.</div>';
- $('liveMsg').textContent=isPaused?'Mecz wstrzymany.': '';
+ const next=upcoming()[0];
+ if(isHardcore){$('nextBox').innerHTML=`<div class="hardcore-current"><div class="small">🔥 HARDCORE — ZWYCIĘZCA ZOSTAJE NA KORCIE</div><b>${escapeHtml(hardcore.king)}</b> broni kortu · <b>${escapeHtml(hardcore.challenger)}</b> rzuca wyzwanie.<div class="small">Następny w kolejce: ${escapeHtml(hardcore.queue[0]||'kolejka zostanie uzupełniona')}</div></div>`;}
+ else $('nextBox').innerHTML=next?`<div class="small">NASTĘPNY MECZ · RUNDA ${next.round} · KORT ${next.court}</div><strong>${matchLabel(next)}</strong><div class="small">Mecz ${schedule.indexOf(next)+1} z ${schedule.length}</div>`:'<div class="small">Brak dostępnych następnych spotkań. Sprawdź pauzujących zawodników lub zakończ rundy.</div>';
+ $('liveMsg').textContent=isPaused?'Mecz wstrzymany.':'';
+ if(settings.competitionType==='team')renderTeamTally();
 }
 function addPoint(i){
  if(!isAdmin)return;
@@ -383,23 +430,28 @@ function addPoint(i){
  renderLive();
 }
 function complete(w){
+ if(!isAdmin||!current||current.done)return;
  current.done=true;
+ $('undo').disabled=true;$('finish').disabled=true;$('pause').disabled=true;
  if(settings.mode==='hardcore'){
   let winner=current.teams[w][0],loser=current.teams[1-w][0];
   hardcore.played++;let award;if(winner===hardcore.king){hardcore.streak++;award=hardcore.streak;hardcore.points[winner]+=award;hardcore.wins[winner]++;}
   else {award=1;hardcore.points[winner]+=award;hardcore.wins[winner]++;hardcore.streak=1;hardcore.king=winner;}
   hardcore.queue.push(loser);
   let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:hardcore.played,kind:'hardcore',mode:'hardcore',winnerName:winner,loserName:loser,pointsAwarded:award};
-  results.unshift(rec);localStorage.setItem('krakenV4Results',JSON.stringify(results));
-  $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${winner} wygrywa!</h2><p>${loser} schodzi z kortu.</p><p>Zdobyte punkty: +${award}</p><button class="btn" onclick="continueHardcore()">NASTĘPNY RYWAL</button></div>`;
+  results.unshift(rec);localStorage.setItem('krakenV5Results',JSON.stringify(results));
+  $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${escapeHtml(winner)} wygrywa!</h2><p>${escapeHtml(loser)} schodzi z kortu.</p><p>Zdobyte punkty: +${award}</p><button class="btn" onclick="continueHardcore()">NASTĘPNY RYWAL</button></div>`;
   renderHardcoreClassification();renderSchedule();renderStats();if(settings.autoNext==='auto')setTimeout(continueHardcore,1200);return;
  }
  let m=schedule.find(x=>x.id===current.id);m.status='done';
  let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:current.round,kind:settings.kind,mode:settings.mode};
  results.unshift(rec);localStorage.setItem('krakenV5Results',JSON.stringify(results));
- if(settings.kind==='team'){if(w===0)teamTally.blue++;else teamTally.red++;}
+ if(settings.competitionType==='team'){if(w===0)teamTally.blue++;else teamTally.red++;}
+ if(settings.competitionType==='team' && settings.mode==='team_cup' && settings.kind==='team' && !current.isTeamDecider && !schedule.some(x=>x.status==='pending') && teamTally.blue===teamTally.red){
+  schedule.push({teams:[[players[0],players[1]],[players[2],players[3]]],id:uid(),round:current.round+1,slot:1,court:1,status:'pending',isTeamDecider:true,label:'Debel decydujący'});
+ }
  if(bracket && settings.mode==='champion' && settings.kind==='single')updateBracketAfterMatch(current.teams[w][0],current.teams[1-w][0]);
- $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${current.teams[w].join(' + ')}</h2><p>Sety: ${current.sets.join(' : ')}</p>${settings.kind==='team'?`<p>Wynik drużyn: 🔵 ${teamTally.blue} : ${teamTally.red} 🔴</p>`:''}<button class="btn" onclick="continueAfterMatch()">DALEJ</button></div>`;
+ $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${current.teams[w].map(escapeHtml).join(' + ')}</h2><p>Sety: ${current.sets.join(' : ')}</p>${settings.competitionType==='team'?`<p>Wynik drużyn: 🔵 ${teamTally.blue} : ${teamTally.red} 🔴</p>`:''}<button class="btn" onclick="continueAfterMatch()">DALEJ</button></div>`;
  $('nextBox').innerHTML=upcoming()[0]?`<div class="small">NASTĘPNY W KOLEJCE</div><strong>${matchLabel(upcoming()[0])}</strong>`:'<strong>Wszystkie dostępne mecze zakończone.</strong>';
  renderSchedule();renderStats();renderBracket();renderTeamTally();$('modeSummary').textContent=settings.mode==='champion'?'Turniej pucharowy — klasyfikacja i miejsca są aktualizowane po meczach.':settings.mode==='equal'?'Tryb równej gry — podsumowanie liczby spotkań i zwycięstw.':'Wyniki trybu drużynowego.';
  if(settings.autoNext==='auto')setTimeout(continueAfterMatch,1200);
@@ -414,16 +466,36 @@ function continueHardcore(){
 }
 function renderHardcoreClassification(){
  if(!hardcore)return;
- let rows=Object.entries(hardcore.points).sort((a,b)=>b[1]-a[1]);
- $('nextBox').innerHTML=`<div class="hardcore-current"><b>🔥 Hardcore — aktualny mistrz kortu: ${hardcore.king}</b><div class="small">Seria zwycięstw: ${hardcore.streak} · następny rywal: ${hardcore.queue[0]||'—'}</div></div>`+
- `<div class="small"><b>Klasyfikacja punktowa</b></div>`+rows.map((x,i)=>`<div class="item"><b>${i===0?'🏆 ':''}${i+1}. ${x[0]}</b><span>${x[1]} pkt · ${hardcore.wins[x[0]]} wygranych</span></div>`).join('');
- $('modeSummary').innerHTML=rows.map((x,i)=>`<div class="item"><b>${i+1}. ${x[0]}</b><span>${x[1]} pkt</span></div>`).join('');
+ const rows=Object.entries(hardcore.points).sort((a,b)=>b[1]-a[1]);
+ $('nextBox').innerHTML=`<div class="hardcore-current"><b>🔥 Hardcore — aktualny mistrz kortu: ${escapeHtml(hardcore.king)}</b><div class="small">Seria zwycięstw: ${hardcore.streak} · następny rywal: ${escapeHtml(hardcore.queue[0]||'—')}</div></div>`+
+ `<div class="small"><b>Klasyfikacja punktowa</b></div>`+rows.map((x,i)=>`<div class="item"><b>${i===0?'🏆 ':''}${i+1}. ${escapeHtml(x[0])}</b><span>${x[1]} pkt · ${hardcore.wins[x[0]]} wygranych</span></div>`).join('');
+ $('modeSummary').innerHTML=rows.map((x,i)=>`<div class="item"><b>${i+1}. ${escapeHtml(x[0])}</b><span>${x[1]} pkt</span></div>`).join('');
 }
-function continueAfterMatch(){if(!isAdmin)return;if(settings.mode==='equal'&&schedule.some(m=>m.status==='pending')){startNext()}else if(settings.mode==='champion'&&schedule.some(m=>m.status==='pending')){startNext()}else{$('matchMeta').textContent='Wszystkie zaplanowane mecze zakończone.';$('scoreboard').innerHTML='<div class="card" style="grid-column:1/-1;text-align:center"><h2>Rozgrywki zakończone</h2><button class="btn" onclick="newEvent()">NOWE ROZGRYWKI</button></div>';$('nextBox').innerHTML='';current=null}renderSchedule()}
+function continueAfterMatch(){
+ if(!isAdmin)return;
+ if(nextPending() || (settings.infinite && !schedule.some(m=>m.status==='pending'))){startNext();return;}
+ if(schedule.some(m=>m.status==='pending')){$('liveMsg').textContent='Wszystkie pozostałe mecze są wstrzymane przez pauzę zawodników. Wznów ich udział w Panelu admina.';return;}
+ $('matchMeta').textContent='Wszystkie zaplanowane mecze zakończone.';
+ let ending='<h2>Rozgrywki zakończone</h2>';
+ if(settings.competitionType==='team'){
+  const winner=teamTally.blue===teamTally.red?'Remis':teamTally.blue>teamTally.red?'Wygrywają Niebiescy':'Wygrywają Czerwoni';
+  ending+=`<p>${winner}</p><p>Wynik drużyn: ${teamTally.blue} : ${teamTally.red}</p>`;
+ }
+ $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center">${ending}<button class="btn" onclick="newEvent()">NOWE ROZGRYWKI</button></div>`;
+ $('nextBox').innerHTML='';current=null;queueCloudSave();renderSchedule();
+}
 function undo(){if(!isAdmin)return;if(!history.length||!current)return;current=JSON.parse(history.pop());renderLive()}
-function finish(){if(!isAdmin)return;if(!current||current.done)return;if(confirm('Zapisać mecz na podstawie aktualnego wyniku?')){let w=current.sets[0]===current.sets[1]?(current.points[0]>=current.points[1]?0:1):(current.sets[0]>current.sets[1]?0:1);complete(w)}}
+function finish(){
+ if(!isAdmin||!current||current.done)return;
+ if(current.sets[0]===current.sets[1] && current.points[0]===current.points[1]){
+  $('liveMsg').textContent='Nie można zakończyć meczu przy remisie. Dokończ wymianę lub seta.';return;
+ }
+ if(!confirm('Zapisać mecz na podstawie aktualnego wyniku?'))return;
+ const w=current.sets[0]===current.sets[1]?(current.points[0]>current.points[1]?0:1):(current.sets[0]>current.sets[1]?0:1);
+ complete(w);
+}
 function togglePause(){if(!isAdmin)return;isPaused=!isPaused;$('pause').textContent=isPaused?'Wznów mecz':'Pauza';renderLive()}
-function newEvent(){if(!isAdmin)return;current=null;schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};eventId=null;viewerMode=false;history=[];location.hash='';$('live').classList.add('hidden');$('setup').classList.remove('hidden');}
+function newEvent(){if(!isAdmin)return;current=null;players=[];schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};settings={};paused=new Set();isPaused=false;eventId=null;viewerMode=false;history=[];location.hash='';$('eventCode').value='';$('shareLink').value='';renderQRCode('');$('eventTitle').textContent='Kraken Squash';$('liveMsg').textContent='';$('live').classList.add('hidden');$('setup').classList.remove('hidden');$('setupMsg').textContent='';renderRosterPicker();renderAdmin();queueCloudSave();}
 function renderSchedule(){
  queueCloudSave();
  renderBracket();if(settings&&settings.mode==='hardcore'){renderHardcoreClassification();$('scheduleSummary').textContent=`Hardcore · rozegrane mecze: ${hardcore?hardcore.played:0} · zwycięzca kortu: ${hardcore?hardcore.king:'—'}`;$('scheduleList').innerHTML='';return;}
@@ -432,25 +504,68 @@ function renderSchedule(){
  $('scheduleList').innerHTML=schedule.map((m,i)=>`<div class="schedule ${m.status==='playing'?'current':''} ${m.status==='done'?'done':''}"><span>${i+1}.</span><span>R${m.round} · K${m.court}: ${matchLabel(m)}${m.teams.flat().some(n=>paused.has(n))?' <span class="warning">(pauza gracza)</span>':''}</span><span><span class="pill">${m.status==='done'?'ZAGRANY':m.status==='playing'?'TERAZ':'OCZEKUJE'}</span> ${m.status==='pending'&&isAdmin?`<button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},-1)">↑</button><button class="btn secondary" style="padding:4px 7px" onclick="moveMatch(${i},1)">↓</button>`:''}</span></div>`).join('');
 }
 function moveMatch(i,d){if(!isAdmin)return;let j=i+d;if(j<0||j>=schedule.length||schedule[i].status!=='pending'||schedule[j].status!=='pending')return;[schedule[i],schedule[j]]=[schedule[j],schedule[i]];renderSchedule()}
-function renderMatches(){$('matchList').innerHTML=results.length?results.map(m=>`<div class="item"><div><b>${m.teams.map(t=>t.join(' + ')).join(' vs ')}</b><div class="small">${m.date} · runda ${m.round}</div></div><div><b>${m.sets.join(' : ')}</b><div class="small">Wygrał: ${m.teams[m.winner].join(' + ')}</div></div></div>`).join(''):'Brak rozegranych meczów.'}
+function renderMatches(){
+ $('matchList').innerHTML=results.length?results.map(m=>`<div class="item"><div><b>${m.teams.map(t=>t.map(escapeHtml).join(' + ')).join(' vs ')}</b><div class="small">${escapeHtml(m.date||'')} · runda ${Number(m.round)||'—'}</div></div><div><b>${m.sets.map(Number).join(' : ')}</b><div class="small">Wygrał: ${(m.teams[m.winner]||[]).map(escapeHtml).join(' + ')||'—'}</div></div></div>`).join(''):'Brak rozegranych meczów.';
+}
 function renderStats(){
- let stats={};results.forEach(m=>m.teams.forEach((team,i)=>team.forEach(n=>{stats[n]??={w:0,l:0,setsW:0,setsL:0,elo:1000};if(i===m.winner)stats[n].w++;else stats[n].l++;stats[n].setsW+=m.sets[i]||0;stats[n].setsL+=m.sets[1-i]||0})));
- // Elo update over match records, simple team-average expected score.
- let elo={};results.slice().reverse().forEach(m=>{let A=m.teams[0],B=m.teams[1];A.forEach(n=>elo[n]??=1000);B.forEach(n=>elo[n]??=1000);let ra=A.reduce((s,n)=>s+elo[n],0)/A.length,rb=B.reduce((s,n)=>s+elo[n],0)/B.length,expected=1/(1+Math.pow(10,(rb-ra)/400)),actual=m.winner===0?1:0,delta=24*(actual-expected);A.forEach(n=>elo[n]+=delta/A.length);B.forEach(n=>elo[n]-=delta/B.length)});
- let list=Object.keys(stats);$('statsGrid').innerHTML=[['Mecze',results.length],['Zawodnicy',list.length],['Zwycięstwa',results.length],['Średnie ELO',list.length?Math.round(list.reduce((s,n)=>s+(elo[n]||1000),0)/list.length):0]].map(x=>`<div class="stat"><strong>${x[1]}</strong><span class="small">${x[0]}</span></div>`).join('');
- $('ranking').innerHTML=list.length?list.sort((a,b)=>(elo[b]||1000)-(elo[a]||1000)).map((n,i)=>`<div class="item"><b>${i+1}. ${n}</b><span>${Math.round(elo[n]||1000)} ELO · ${stats[n].w}W / ${stats[n].l}L</span></div>`).join(''):'Brak wyników. Ranking ELO pojawi się po pierwszych meczach.';
+ let stats={};
+ results.forEach(m=>m.teams.forEach((team,i)=>team.forEach(n=>{
+  stats[n]??={w:0,l:0,setsW:0,setsL:0};
+  if(i===m.winner)stats[n].w++;else stats[n].l++;
+  stats[n].setsW+=m.sets[i]||0;stats[n].setsL+=m.sets[1-i]||0;
+ })));
+ let elo={};
+ results.slice().reverse().forEach(m=>{
+  const A=m.teams[0],B=m.teams[1];A.forEach(n=>elo[n]??=1000);B.forEach(n=>elo[n]??=1000);
+  const ra=A.reduce((v,n)=>v+elo[n],0)/A.length,rb=B.reduce((v,n)=>v+elo[n],0)/B.length;
+  const expected=1/(1+Math.pow(10,(rb-ra)/400)),actual=m.winner===0?1:0,delta=24*(actual-expected);
+  A.forEach(n=>elo[n]+=delta/A.length);B.forEach(n=>elo[n]-=delta/B.length);
+ });
+ const list=Object.keys(stats),wins=list.reduce((sum,n)=>sum+stats[n].w,0);
+ $('statsGrid').innerHTML=[['Mecze',results.length],['Zawodnicy',list.length],['Wygrane zawodników',wins],['Średnie ELO',list.length?Math.round(list.reduce((sum,n)=>sum+(elo[n]||1000),0)/list.length):0]].map(x=>`<div class="stat"><strong>${x[1]}</strong><span class="small">${x[0]}</span></div>`).join('');
+ $('ranking').innerHTML=list.length?list.sort((a,b)=>(elo[b]||1000)-(elo[a]||1000)).map((n,i)=>`<div class="item"><b>${i+1}. ${escapeHtml(n)}</b><span>${Math.round(elo[n]||1000)} ELO · ${stats[n].w}W / ${stats[n].l}L</span></div>`).join(''):'Brak wyników. Ranking ELO pojawi się po pierwszych meczach.';
 }
 function renderAdmin(){
- queueCloudSave();
- ensurePlayerColors();
- $('adminPlayers').innerHTML=players.map((n,i)=>`<span class="playerchip">${escapeHtml(n)}<button onclick="removePlayer(${i})">×</button></span>`).join('')||'<span class="small">Brak zawodników.</span>';
- $('playerColorSettings').innerHTML=players.map((n,i)=>`<div class="color-row"><span class="player-color-name">${escapeHtml(n)}</span><input aria-label="Kolor zawodnika ${escapeHtml(n)}" type="color" value="${getPlayerColor(n,i)}" onchange="setPlayerColor(${i},this.value)" ${isAdmin?'':'disabled'}></div>`).join('')||'<span class="small">Dodaj zawodników, aby przypisać im kolory.</span>';
- $('pausePlayers').innerHTML=players.map(n=>`<div class="item"><span>${escapeHtml(n)}</span><button class="btn ${paused.has(n)?'gold':'secondary'}" onclick="togglePlayerPause('${n.replace(/'/g,"\\'")}')">${paused.has(n)?'Wznów':'Wstrzymaj udział'}</button></div>`).join('');
+ queueCloudSave();ensurePlayerColors();
+ $('adminPlayers').innerHTML=registeredPlayers.map((n,i)=>`<span class="playerchip">${escapeHtml(n)}<button type="button" data-remove-player="${i}" aria-label="Usuń ${escapeHtml(n)}">×</button></span>`).join('')||'<span class="small">Brak zawodników.</span>';
+ renderRosterPicker();
+ $('playerColorSettings').innerHTML=players.map((n,i)=>`<div class="color-row"><span class="player-color-name">${escapeHtml(n)}</span><input aria-label="Kolor zawodnika ${escapeHtml(n)}" type="color" value="${getPlayerColor(n,i)}" data-player-color="${i}" ${isAdmin?'':'disabled'}></div>`).join('')||'<span class="small">Dodaj zawodników, aby przypisać im kolory.</span>';
+ $('pausePlayers').innerHTML=players.map(n=>`<div class="item"><span>${escapeHtml(n)}</span><button type="button" class="btn ${paused.has(n)?'gold':'secondary'}" data-pause-player="${escapeHtml(n)}">${paused.has(n)?'Wznów':'Wstrzymaj udział'}</button></div>`).join('');
+ $('adminPlayers').querySelectorAll('[data-remove-player]').forEach(b=>b.addEventListener('click',()=>removePlayer(Number(b.dataset.removePlayer))));
+ $('playerColorSettings').querySelectorAll('[data-player-color]').forEach(el=>el.addEventListener('change',()=>setPlayerColor(Number(el.dataset.playerColor),el.value)));
+ $('pausePlayers').querySelectorAll('[data-pause-player]').forEach(b=>b.addEventListener('click',()=>togglePlayerPause(b.dataset.pausePlayer)));
 }
-function removePlayer(i){if(!isAdmin)return;if(schedule.length){$('adminMsg').textContent='Zmiana składu po wygenerowaniu harmonogramu wymaga ponownego przeliczenia.';return}const removed=players.splice(i,1)[0];delete playerColors[removed];renderAdmin()}
-function togglePlayerPause(n){if(!isAdmin)return;paused.has(n)?paused.delete(n):paused.add(n);renderAdmin();renderSchedule();if(current&&current.teams.flat().includes(n))$('liveMsg').textContent='Uwaga: zawodnik ma ustawioną pauzę. Bieżący mecz nie został automatycznie przerwany.'}
-function addPlayer(){if(!isAdmin)return;let n=$('addPlayerName').value.trim();if(!n)return;if(players.length>=4){$('adminMsg').textContent='W wersji demo maksymalnie 4 zawodników.';return}if(players.includes(n)){ $('adminMsg').textContent='Ten zawodnik już jest na liście.';return}players.push(n);playerColors[n]=DEFAULT_PLAYER_COLORS[(players.length-1)%DEFAULT_PLAYER_COLORS.length];$('addPlayerName').value='';renderAdmin();$('adminMsg').textContent='Dodano zawodnika do listy. Aby uwzględnić go w harmonogramie, przelicz rozgrywki.'}
-function exportCSV(){let rows=[['Data','Zawodnicy/Drużyny','Wynik setów','Zwycięzca','Runda'],...results.map(m=>[m.date,m.teams.map(t=>t.join(' + ')).join(' vs '),m.sets.join(':'),m.teams[m.winner].join(' + '),m.round])];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='kraken-wyniki.csv';a.click();URL.revokeObjectURL(a.href)}
+function removePlayer(i){
+ if(!isAdmin)return;
+ const name=registeredPlayers[i];
+ if(!name)return;
+ if(players.includes(name)&&schedule.length){
+  $('adminMsg').textContent='Ten zawodnik bierze udział w aktualnych rozgrywkach. Zakończ sesję przed usunięciem go z listy.';
+  return;
+ }
+ registeredPlayers.splice(i,1);
+ localStorage.setItem('krakenRegisteredPlayers',JSON.stringify(registeredPlayers));
+ renderAdmin();
+ queueCloudSave();
+}
+function togglePlayerPause(n){
+ if(!isAdmin)return;
+ paused.has(n)?paused.delete(n):paused.add(n);
+ renderAdmin();renderSchedule();queueCloudSave();
+ if(current&&current.teams.flat().includes(n))$('liveMsg').textContent='Uwaga: zawodnik ma ustawioną pauzę. Bieżący mecz nie został automatycznie przerwany.';
+}
+function addPlayer(){
+ if(!isAdmin)return;
+ const n=$('addPlayerName').value.trim().replace(/\s+/g,' ');
+ if(!n)return;
+ if(registeredPlayers.length>=100){$('adminMsg').textContent='Osiągnięto limit 100 zawodników.';return;}
+ if(registeredPlayers.some(x=>x.toLocaleLowerCase('pl-PL')===n.toLocaleLowerCase('pl-PL'))){$('adminMsg').textContent='Zawodnik o takiej nazwie już istnieje.';return;}
+ registeredPlayers.push(n);localStorage.setItem('krakenRegisteredPlayers',JSON.stringify(registeredPlayers));
+ playerColors[n]=DEFAULT_PLAYER_COLORS[(registeredPlayers.length-1)%DEFAULT_PLAYER_COLORS.length];
+ $('addPlayerName').value='';renderAdmin();queueCloudSave();
+ $('adminMsg').textContent='Dodano zawodnika do listy. Możesz go teraz wybrać przy tworzeniu rozgrywek.';
+}
+function exportCSV(){let rows=[['Data','Zawodnicy/Drużyny','Wynik setów','Zwycięzca','Runda'],...results.map(m=>[m.date,m.teams.map(t=>t.join(' + ')).join(' vs '),m.sets.join(':'),m.teams[m.winner].join(' + '),m.round])];let csv=rows.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='kraken-wyniki.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function shufflePending(){if(!isAdmin)return;let idx=schedule.map((m,i)=>m.status==='pending'?i:-1).filter(i=>i>=0),vals=idx.map(i=>schedule[i]).sort(()=>Math.random()-.5);idx.forEach((i,k)=>schedule[i]=vals[k]);renderSchedule()}
 function rebuild(){if(!isAdmin)return;if(!confirm('Wygenerować kolejkę od nowa? Zagrane mecze zostaną zachowane, oczekujące zostaną zastąpione.'))return;let done=schedule.filter(m=>m.status==='done'),built=generate().ordered.filter(m=>!done.some(d=>matchLabel(d)===matchLabel(m)));schedule=[...done,...built];renderSchedule()}
 function toggleTV(on){
@@ -469,8 +584,8 @@ function toggleTV(on){
 }
 $('create').onclick=create;setCompetitionType('individual');$('undo').onclick=undo;$('finish').onclick=finish;$('pause').onclick=togglePause;$('endSession').onclick=newEvent;$('nextBtn').onclick=()=>{if(current&&!current.done){if(!confirm('Pominąć bieżący mecz?'))return;let m=schedule.find(x=>x.id===current.id);if(m)m.status='skipped'}if(settings&&settings.mode==='hardcore'){continueHardcore()}else startNext()};$('tvBtn').onclick=()=>toggleTV(true);
 $('addPlayer').onclick=addPlayer;$('export').onclick=exportCSV;$('shufflePending').onclick=shufflePending;$('rebuild').onclick=rebuild;
-$('copyLink').onclick=()=>{renderQRCode($('shareLink').value);navigator.clipboard?.writeText($('shareLink').value).then(()=>$('adminMsg').textContent='Skopiowano link do podglądu online.').catch(()=>$('adminMsg').textContent='Skopiuj link ręcznie.');};
-$('clear').onclick=()=>{if(!isAdmin)return;if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();$('adminMsg').textContent='Wyczyszczono lokalną historię.'}};
+$('copyLink').onclick=async()=>{const link=$('shareLink').value;renderQRCode(link);try{if(!navigator.clipboard?.writeText)throw new Error('Clipboard niedostępny');await navigator.clipboard.writeText(link);$('adminMsg').textContent='Skopiowano link do podglądu online.';}catch(err){$('shareLink').focus();$('shareLink').select();$('adminMsg').textContent='Skopiuj zaznaczony link ręcznie.';}};
+$('clear').onclick=()=>{if(!isAdmin)return;if(confirm('Usunąć lokalną historię wyników?')){results=[];localStorage.removeItem('krakenV5Results');renderMatches();renderStats();queueCloudSave();$('adminMsg').textContent='Wyczyszczono historię wyników.'}};
 $('eventName').onchange=()=>{if(settings)settings.eventName=$('eventName').value;$('eventTitle').textContent=$('eventName').value;queueCloudSave()};
 
 // --- Firebase: logowanie administratora, zapis wydarzenia i publiczny podgląd ---
@@ -494,7 +609,7 @@ function makeEventCode(){
 function snapshotState(){
   return {
     eventName: settings.eventName || $('eventName').value || 'Kraken Squash',
-    players, playerColors, schedule, current, bracket, teamTally, hardcore,
+    players, registeredPlayers, playerColors, schedule, current, bracket, teamTally, hardcore,
     results, paused:[...paused], settings, isPaused,
     updatedAt: Date.now()
   };
@@ -517,7 +632,9 @@ function applyCloudState(data){
   applyingCloudState=true;
   try{
     players=Array.isArray(data.players)?data.players:[];
-    playerColors=data.playerColors||{};
+    registeredPlayers=Array.isArray(data.registeredPlayers)?data.registeredPlayers.filter(x=>typeof x==='string'&&x.trim()):players.slice();
+    localStorage.setItem('krakenRegisteredPlayers',JSON.stringify(registeredPlayers));
+    playerColors=data.playerColors&&typeof data.playerColors==='object'?data.playerColors:{};
     ensurePlayerColors();
     schedule=Array.isArray(data.schedule)?data.schedule:[];
     current=data.current||null;
@@ -599,6 +716,7 @@ async function initFirebase(){
       if(viewerMode && eventId)$('cloudStatus').textContent='☁ Podgląd online';
       else $('cloudStatus').textContent=isAdmin?'☁ Administrator online':'Firebase gotowy';
       if(current)renderLive();
+      renderAdmin();
     });
     $('loginBtn').onclick=async()=>{
       const email=$('adminEmail').value.trim(),password=$('adminPassword').value;
@@ -619,6 +737,7 @@ async function initFirebase(){
     console.error(err);
   }
 }
+renderRosterPicker();
 initFirebase();
 
 </script>
@@ -630,7 +749,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-
 <script>
 function preventCourtScroll(e){
   if(document.documentElement.classList.contains('tvMode')||document.body.classList.contains('tvMode')){
