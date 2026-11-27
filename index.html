@@ -130,7 +130,7 @@ html.tvMode body{
 </div>
 </div>
 </section>
-<div class="footer">Kraken Squash LiveScore · V11 · Firebase</div>
+<div class="footer">Kraken Squash LiveScore · V11.1 · Firebase</div>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -138,7 +138,7 @@ const $=id=>document.getElementById(id);
 function safeLoadJson(key,fallback){
  try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(err){console.warn('Nie można odczytać lokalnych danych:',key,err);return fallback;}
 }
-let players=[],registeredPlayers=safeLoadJson('krakenRegisteredPlayers',[]),schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=safeLoadJson('krakenV5Results',[]),paused=new Set(),settings={},isPaused=false;
+let players=[],registeredPlayers=safeLoadJson('krakenRegisteredPlayers',[]),schedule=[],current=null,history=[],bracket=null,teamTally={blue:0,red:0},hardcore=null,results=safeLoadJson('krakenV5Results',[]),paused=new Set(),settings={},isPaused=false,autoNextTimer=null;
 if(!Array.isArray(registeredPlayers))registeredPlayers=[];
 if(!Array.isArray(results))results=[];
 let playerColors=safeLoadJson('krakenPlayerColors',{}); if(!playerColors||typeof playerColors!=='object'||Array.isArray(playerColors))playerColors={};
@@ -443,7 +443,7 @@ function complete(w){
   let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:hardcore.played,kind:'hardcore',mode:'hardcore',winnerName:winner,loserName:loser,pointsAwarded:award};
   results.unshift(rec);localStorage.setItem('krakenV5Results',JSON.stringify(results));
   $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${escapeHtml(winner)} wygrywa!</h2><p>${escapeHtml(loser)} schodzi z kortu.</p><p>Zdobyte punkty: +${award}</p><button class="btn" onclick="continueHardcore()">NASTĘPNY RYWAL</button></div>`;
-  renderHardcoreClassification();renderSchedule();renderStats();if(settings.autoNext==='auto')setTimeout(continueHardcore,1200);return;
+  renderHardcoreClassification();renderSchedule();renderStats();if(settings.autoNext==='auto'){clearTimeout(autoNextTimer);autoNextTimer=setTimeout(continueHardcore,10000);$('liveMsg').textContent='Następny mecz rozpocznie się automatycznie za 10 sekund. Możesz też uruchomić go wcześniej przyciskiem.';}return;
  }
  let m=schedule.find(x=>x.id===current.id);m.status='done';
  let rec={date:new Date().toLocaleString('pl-PL'),teams:current.teams,winner:w,sets:current.sets.slice(),round:current.round,kind:settings.kind,mode:settings.mode};
@@ -456,10 +456,11 @@ function complete(w){
  $('scoreboard').innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center"><h2 style="color:var(--lime)">🏆 ${current.teams[w].map(escapeHtml).join(' + ')}</h2><p>Sety: ${current.sets.join(' : ')}</p>${settings.competitionType==='team'?`<p>Wynik drużyn: 🔵 ${teamTally.blue} : ${teamTally.red} 🔴</p>`:''}<button class="btn" onclick="continueAfterMatch()">DALEJ</button></div>`;
  $('nextBox').innerHTML=upcoming()[0]?`<div class="small">NASTĘPNY W KOLEJCE</div><strong>${matchLabel(upcoming()[0])}</strong>`:'<strong>Wszystkie dostępne mecze zakończone.</strong>';
  renderSchedule();renderStats();renderBracket();renderTeamTally();$('modeSummary').textContent=settings.mode==='champion'?'Turniej pucharowy — klasyfikacja i miejsca są aktualizowane po meczach.':settings.mode==='equal'?'Tryb równej gry — podsumowanie liczby spotkań i zwycięstw.':'Wyniki trybu drużynowego.';
- if(settings.autoNext==='auto')setTimeout(continueAfterMatch,1200);
+ if(settings.autoNext==='auto'){clearTimeout(autoNextTimer);autoNextTimer=setTimeout(continueAfterMatch,10000);$('liveMsg').textContent='Następny mecz rozpocznie się automatycznie za 10 sekund. Możesz też uruchomić go wcześniej przyciskiem DALEJ.';}
 }
 
 function continueHardcore(){
+ clearTimeout(autoNextTimer);autoNextTimer=null;
  if(!isAdmin)return;
  if(!hardcore)return;
  let previousKing=hardcore.king;
@@ -474,6 +475,7 @@ function renderHardcoreClassification(){
  $('modeSummary').innerHTML=rows.map((x,i)=>`<div class="item"><b>${i+1}. ${escapeHtml(x[0])}</b><span>${x[1]} pkt</span></div>`).join('');
 }
 function continueAfterMatch(){
+ clearTimeout(autoNextTimer);autoNextTimer=null;
  if(!isAdmin)return;
  if(nextPending() || (settings.infinite && !schedule.some(m=>m.status==='pending'))){startNext();return;}
  if(schedule.some(m=>m.status==='pending')){$('liveMsg').textContent='Wszystkie pozostałe mecze są wstrzymane przez pauzę zawodników. Wznów ich udział w Panelu admina.';return;}
@@ -497,7 +499,7 @@ function finish(){
  complete(w);
 }
 function togglePause(){if(!isAdmin)return;isPaused=!isPaused;$('pause').textContent=isPaused?'Wznów mecz':'Pauza';renderLive()}
-function newEvent(){if(!isAdmin)return;current=null;players=[];schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};settings={};paused=new Set();isPaused=false;eventId=null;viewerMode=false;history=[];location.hash='';$('eventCode').value='';$('shareLink').value='';renderQRCode('');$('eventTitle').textContent='Kraken Squash';$('liveMsg').textContent='';$('live').classList.add('hidden');$('setup').classList.remove('hidden');$('setupMsg').textContent='';renderRosterPicker();renderAdmin();queueCloudSave();}
+function newEvent(){if(!isAdmin)return;clearTimeout(autoNextTimer);autoNextTimer=null;current=null;players=[];schedule=[];bracket=null;hardcore=null;teamTally={blue:0,red:0};settings={};paused=new Set();isPaused=false;eventId=null;viewerMode=false;history=[];location.hash='';$('eventCode').value='';$('shareLink').value='';renderQRCode('');$('eventTitle').textContent='Kraken Squash';$('liveMsg').textContent='';$('live').classList.add('hidden');$('setup').classList.remove('hidden');$('setupMsg').textContent='';renderRosterPicker();renderAdmin();queueCloudSave();}
 function renderSchedule(){
  queueCloudSave();
  renderBracket();if(settings&&settings.mode==='hardcore'){renderHardcoreClassification();$('scheduleSummary').textContent=`Hardcore · rozegrane mecze: ${hardcore?hardcore.played:0} · zwycięzca kortu: ${hardcore?hardcore.king:'—'}`;$('scheduleList').innerHTML='';return;}
